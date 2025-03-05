@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="55dp"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".ui.login">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GourmetCo."
+        android:fontFamily="@font/instrumentsansbold"
+        android:textSize="32sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        />
+    
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/loginimg"
+        android:contentDescription="GourmetCo Logo"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_gravity="start"
+        android:fontFamily="@font/instrumentsansbold"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark"
+        android:layout_marginTop="16dp"/>
+
+    <!-- oigan hay dos opciones para los inputs, los editText's y los
+        relatives layouts con la imagen y el texto adentro
+    -->
+    <!--
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:drawableStart="@drawable/ic_email"
+        android:inputType="textEmailAddress"
+        android:fontFamily="@font/instrumentsans"
+        android:padding="12dp"
+        />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:drawableStart="@drawable/ic_password"
+        android:inputType="textPassword"
+        android:fontFamily="@font/instrumentsans"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"/>
+-->
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/email_icon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_email"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="4dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="32dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/password_icon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_password"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:padding="4dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:paddingStart="32dp"
+        />
+</RelativeLayout>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Continue"
+        android:backgroundTint="@color/primary"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/instrumentsansbold"
+        android:textAllCaps="false"
+        android:textSize="14dp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New to GourmetCo? Register"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>
