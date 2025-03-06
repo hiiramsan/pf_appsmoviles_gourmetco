@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,9 +7,14 @@
     android:orientation="vertical"
     tools:context=".ui.create.CreateFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <Button
+        android:id="@+id/btnCancel"
         android:textColor="@color/gray"
-        android:id="@+id/button"
         android:fontFamily="@font/instrumentsans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,11 +32,11 @@
         android:textColor="@color/dark"
         android:textSize="32sp" />
 
-    <LinearLayout
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content">
 
         <TextView
             android:fontFamily="@font/instrumentsans"
@@ -488,10 +493,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="80dp"
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:text="Save"
@@ -504,6 +511,7 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/rounded_category"
                 />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>
