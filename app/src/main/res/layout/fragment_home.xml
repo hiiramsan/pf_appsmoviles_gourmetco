@@ -35,6 +35,7 @@
         android:textColor="#333333"
         android:textSize="16sp" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -86,6 +87,106 @@
 
     </LinearLayout>
 
+    <!-- Categories section -->
+    <TextView
+        android:id="@+id/tvCategories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Categories"
+        android:textColor="#333333"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- First row of categories -->
+    <LinearLayout
+        android:id="@+id/layoutRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnBreakfast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+
+            android:background="@drawable/category_button_background"
+            android:minHeight="36dp"
+            android:text="Breakfast"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnLunch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_button_background"
+            android:minHeight="36dp"
+            android:text="Lunch"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnDinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_button_selected_background"
+            android:minHeight="36dp"
+            android:text="Dinner"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- Second row of categories -->
+    <LinearLayout
+        android:id="@+id/layoutRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnVegan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_button_selected_background"
+            android:minHeight="36dp"
+            android:text="Vegan"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnBeverage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/category_button_background"
+            android:minHeight="36dp"
+            android:text="Beverage"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnSpicy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/category_button_background"
+            android:minHeight="36dp"
+            android:text="Spicy"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+    </LinearLayout>
 
 
     <com.google.android.material.tabs.TabLayout
