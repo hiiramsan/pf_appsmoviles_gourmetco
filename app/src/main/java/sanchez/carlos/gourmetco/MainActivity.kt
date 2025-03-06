@@ -40,5 +40,11 @@ class MainActivity : AppCompatActivity() {
                 binding.scrollView2.visibility = View.GONE  // Ocultar en otros fragmentos
             }
         }
+
+        // Detectar clic en la imagen y navegar a fragment_detalles_receta
+        binding.imagenReceta.setOnClickListener {
+            navController.navigate(R.id.fragment_detalles_receta)
+        }
     }
 }
+

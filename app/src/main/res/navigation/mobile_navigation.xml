@@ -35,4 +35,11 @@
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 
+    <fragment
+        android:id="@+id/fragment_detalles_receta"
+        android:name="sanchez.carlos.gourmetco.ui.detallesreceta.DetallesReceta"
+        android:label="Detalles de Receta"
+        tools:layout="@layout/fragment_detalles_receta" />
+
+
 </navigation>

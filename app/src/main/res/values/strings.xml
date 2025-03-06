@@ -4,4 +4,6 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="placeholder_instructions">1. Crack the eggs into a small bowl and whisk together until very well combined. Add salt and pepper. (Start with about 1/4 teaspoon salt.) 2.Put a medium-sized nonstick skillet over medium heat and add the butter...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
