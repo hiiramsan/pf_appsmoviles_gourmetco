@@ -10,14 +10,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import sanchez.carlos.gourmetco.MainActivity
 import sanchez.carlos.gourmetco.R
-import sanchez.carlos.gourmetco.ui.SignUpActivity
-import sanchez.carlos.gourmetco.ui.home.HomeFragment
-import sanchez.carlos.gourmetco.ui.home.HomeViewModel
 
 class CreateFragment : Fragment() {
 
-    lateinit var cancel : Button
-    lateinit var save : Button
+    private lateinit var cancel : Button
+    private lateinit var save : Button
 
     companion object {
         fun newInstance() = CreateFragment()
