@@ -32,19 +32,6 @@ class MainActivity : AppCompatActivity() {
 
         navView.setupWithNavController(navController)
 
-        // Escuchar cambios en los fragmentos
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.nav_home) {
-                binding.scrollView2.visibility = View.VISIBLE  // Mostrar en Home
-            } else {
-                binding.scrollView2.visibility = View.GONE  // Ocultar en otros fragmentos
-            }
-        }
-
-        // Detectar clic en la imagen y navegar a fragment_detalles_receta
-        binding.imagenReceta.setOnClickListener {
-            navController.navigate(R.id.fragment_detalles_receta)
-        }
     }
 }
 
