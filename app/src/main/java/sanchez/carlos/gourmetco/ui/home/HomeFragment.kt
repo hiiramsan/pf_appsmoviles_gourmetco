@@ -6,15 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import sanchez.carlos.gourmetco.databinding.FragmentHomeBinding
+import sanchez.carlos.gourmetco.ui.home.tabs.ExploreFragment
+import sanchez.carlos.gourmetco.ui.home.tabs.MyRecipesFragment
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,19 +24,44 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textHome
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        return root
+        // Configurar el ViewPager2 con el adapter
+        val adapter = ViewPagerAdapter(requireActivity())
+        binding.viewPager.adapter = adapter
+
+        // Conectar TabLayout con ViewPager2
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Explore"
+                1 -> "My Recipes"
+                else -> ""
+            }
+        }.attach()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+}
+
+
+class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
+    FragmentStateAdapter(fragmentActivity) {
+
+    override fun getItemCount(): Int = 2
+
+    override fun createFragment(position: Int): Fragment {
+        return when (position) {
+            0 -> ExploreFragment()
+            1 -> MyRecipesFragment()
+            else -> throw IllegalStateException("Invalid position")
+        }
     }
 }
