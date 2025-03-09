@@ -84,7 +84,7 @@
             android:lines="5"
             android:maxLines="10"
             android:textColorHint="@color/placeholder"
-            android:textColor="@color/gray"
+            android:textColor="@color/dark"
             android:scrollbars="vertical"
             android:gravity="top"
             android:background="@drawable/edit_text_bg"
@@ -169,6 +169,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Egg"
                 android:textColorHint="@color/placeholder"
+                android:textColor="@color/dark"
                 android:background="@drawable/edit_text_bg"
                 android:padding="10dp"
                 android:textSize="10sp"
@@ -191,12 +192,12 @@
                 android:inputType="number"/>
 
             <Spinner
-                android:fontFamily="@font/instrumentsans"
+                android:id="@+id/unity"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/edit_text_bg"
                 android:layout_marginEnd="15dp"
-                android:textSize="10sp"
+                android:spinnerMode="dropdown"
             />
 
             <ImageButton
@@ -229,7 +230,7 @@
             android:lines="5"
             android:maxLines="10"
             android:textColorHint="@color/placeholder"
-            android:textColor="@color/gray"
+            android:textColor="@color/dark"
             android:scrollbars="vertical"
             android:gravity="top"
             android:background="@drawable/edit_text_bg"
@@ -319,43 +320,83 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <com.google.android.flexbox.FlexboxLayout
+                    xmlns:flexbox="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    flexbox:flexWrap="wrap"
+                    flexbox:justifyContent="flex_start"
+                    flexbox:alignItems="center">
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:text="Breakfast  X"
-                    android:textColor="@color/green"
-                    android:fontFamily="@font/instrumentsans"
-                    android:textAllCaps="false"
-                    android:paddingVertical="0dp"
-                    android:paddingHorizontal="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="10sp"
-                    android:minWidth="0dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:background="@drawable/rounded_category"
-                />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="25dp"
+                        android:paddingHorizontal="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/rounded_category"
+                        android:layout_marginHorizontal="5dp"
+                        >
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:text="Salty  X"
-                    android:textColor="@color/green"
-                    android:fontFamily="@font/instrumentsans"
-                    android:textAllCaps="false"
-                    android:paddingVertical="0dp"
-                    android:paddingHorizontal="10dp"
-                    android:textSize="10sp"
-                    android:minWidth="0dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:background="@drawable/rounded_category"
-                />
-                </LinearLayout>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Breakfast"
+                            android:textColor="@color/green"
+                            android:fontFamily="@font/instrumentsans"
+                            android:textAllCaps="false"
+                            android:paddingVertical="0dp"
+                            android:textSize="10sp"
+                            android:minWidth="0dp"
+                            android:background="@android:color/transparent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            />
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/cross"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingHorizontal="5dp"
+                        android:background="@drawable/rounded_category"
+                        android:layout_marginHorizontal="5dp"
+                        >
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Salty"
+                            android:textColor="@color/green"
+                            android:fontFamily="@font/instrumentsans"
+                            android:textAllCaps="false"
+                            android:paddingVertical="0dp"
+                            android:textSize="10sp"
+                            android:minWidth="0dp"
+                            android:background="@android:color/transparent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            />
+
+                        <ImageButton
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/cross"
+                            />
+                    </LinearLayout>
+
+
+
+
+                </com.google.android.flexbox.FlexboxLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -591,7 +632,7 @@
                 android:textColor="@color/white"
                 android:layout_marginEnd="10dp"
                 android:backgroundTint="@color/green"
-                android:background="@drawable/rounded_category"
+                android:background="@drawable/logout_btn"
                 />
             </LinearLayout>
         </LinearLayout>

@@ -7,7 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import sanchez.carlos.gourmetco.MainActivity
 import sanchez.carlos.gourmetco.R
 
@@ -15,6 +18,7 @@ class CreateFragment : Fragment() {
 
     private lateinit var cancel : Button
     private lateinit var save : Button
+    private lateinit var unitySpinner: Spinner
 
     companion object {
         fun newInstance() = CreateFragment()
@@ -39,6 +43,10 @@ class CreateFragment : Fragment() {
 
         cancel = view.findViewById(R.id.btnCancel)
         save = view.findViewById(R.id.btnSave)
+        unitySpinner = view.findViewById(R.id.unity)
+
+        unitySpinner.setSelection(0)
+        setupUnitySpinner()
 
         cancel.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
@@ -51,4 +59,11 @@ class CreateFragment : Fragment() {
         }
     }
 
+    private fun setupUnitySpinner() {
+        val units = arrayOf("Pz", "Sp", "Cup")
+        val adapter = ArrayAdapter(requireContext(),
+            android.R.layout.simple_spinner_item, units)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        unitySpinner.adapter = adapter
+    }
 }
