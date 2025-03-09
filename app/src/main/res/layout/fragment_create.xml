@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".ui.create.CreateFragment">
 
     <LinearLayout
@@ -39,12 +40,14 @@
             android:layout_height="wrap_content">
 
         <TextView
-            android:fontFamily="@font/instrumentsans"
+            android:fontFamily="@font/instrumentsansmedium"
             android:textColor="@color/dark"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_marginTop="15dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="5dp"
             android:text="Name of the recipe"/>
 
         <EditText
@@ -60,12 +63,14 @@
             android:inputType="text"/>
 
         <TextView
-            android:fontFamily="@font/instrumentsans"
+            android:fontFamily="@font/instrumentsansmedium"
             android:textColor="@color/dark"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
             android:text="Brief description"
             />
 
@@ -74,7 +79,7 @@
             android:id="@+id/multiLineText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Escribe aquí..."
+            android:hint="Scrambled eggs can be one of the most fantastic, luxurious breakfasts around if you remember a few key things..."
             android:inputType="textMultiLine"
             android:lines="5"
             android:maxLines="10"
@@ -90,15 +95,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="20dp"
             android:orientation="horizontal">
 
             <TextView
-                android:fontFamily="@font/instrumentsans"
+                android:fontFamily="@font/instrumentsansmedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:textSize="16sp"
                 android:text="Ingredients"
                 android:textColor="@color/dark" />
 
@@ -124,7 +130,7 @@
 
             <TextView
                 android:fontFamily="@font/instrumentsans"
-
+                android:textSize="15sp"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -135,6 +141,7 @@
             <TextView
                 android:fontFamily="@font/instrumentsans"
                 android:layout_width="40dp"
+                android:textSize="15sp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Qty"
@@ -145,6 +152,7 @@
                 android:fontFamily="@font/instrumentsans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="15sp"
                 android:layout_gravity="center"
                 android:text="Unity"
                 android:textColor="@color/dark" />
@@ -157,7 +165,6 @@
 
             <EditText
                 android:fontFamily="@font/instrumentsans"
-
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:hint="Egg"
@@ -202,12 +209,14 @@
         </LinearLayout>
 
         <TextView
-            android:fontFamily="@font/instrumentsans"
+            android:fontFamily="@font/instrumentsansmedium"
             android:textColor="@color/dark"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="16sp"
             android:text="Instructions"
             />
 
@@ -231,27 +240,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
             <TextView
-                android:fontFamily="@font/instrumentsans"
-                android:textColor="@color/dark"
-                android:layout_gravity="center"
-                android:layout_width="100dp"
+                android:layout_width="104dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="30dp"
-                android:layout_marginVertical="10dp"
+                android:fontFamily="@font/instrumentsansmedium"
                 android:text="Add a photo"
-                />
+                android:textColor="@color/dark"
+                android:textSize="16sp" />
 
             <TextView
-                android:fontFamily="@font/instrumentsans"
+                android:fontFamily="@font/instrumentsansmedium"
                 android:textColor="@color/dark"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
+                android:textSize="16sp"
                 android:text="Tags"
                 />
         </LinearLayout>
@@ -281,7 +290,7 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/edit_text_bg">
+                        android:background="@drawable/upload_photo">
 
                         <ImageView
                             android:id="@+id/iv_upload_icon"
@@ -312,19 +321,22 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:text="Breakfast  X"
-                    android:fontFamily="@font/instrumentsansbold"
-                    android:textAllCaps="false"
                     android:textColor="@color/green"
+                    android:fontFamily="@font/instrumentsans"
+                    android:textAllCaps="false"
                     android:paddingVertical="0dp"
                     android:paddingHorizontal="10dp"
-                    android:textSize="12sp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="10sp"
+                    android:minWidth="0dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/rounded_category"
                 />
 
@@ -333,11 +345,14 @@
                     android:layout_height="25dp"
                     android:text="Salty  X"
                     android:textColor="@color/green"
-                    android:fontFamily="@font/instrumentsansbold"
+                    android:fontFamily="@font/instrumentsans"
                     android:textAllCaps="false"
                     android:paddingVertical="0dp"
-                    android:paddingHorizontal="0dp"
-                    android:textSize="12sp"
+                    android:paddingHorizontal="10dp"
+                    android:textSize="10sp"
+                    android:minWidth="0dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:background="@drawable/rounded_category"
                 />
                 </LinearLayout>
@@ -345,38 +360,38 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginBottom="19dp"
                     android:orientation="horizontal">
 
                     <EditText
-                        android:layout_weight="1"
-                        android:fontFamily="@font/instrumentsans"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="New tag..."
-                        android:textColorHint="@color/placeholder"
-                        android:background="@drawable/rounded_btn"
-                        android:padding="10dp"
-                        android:textSize="10sp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_gravity="center"
-                        android:inputType="text"/>
-
-                    <TextView
-                        android:layout_width="30dp"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:text="+"
-                        android:textSize="15sp"
-                        android:textAlignment="center"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:background="@drawable/rounded_btn_plus"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_btn"
+                        android:fontFamily="@font/instrumentsans"
+                        android:hint="New tag..."
+                        android:textColor="@color/black"
+                        android:inputType="text"
+                        android:layout_marginVertical="0dp"
+                        android:paddingHorizontal="10dp"
+                        android:textColorHint="@color/placeholder"
+                        android:textSize="10sp"
+                        android:gravity="center_vertical" />
+
+                    <ImageButton
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/circle_btn_plus"
                         android:layout_gravity="center_vertical"
+                        android:src="@drawable/plus"
                     />
+
                 </LinearLayout>
 
                 <com.google.android.flexbox.FlexboxLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:flexbox="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -388,42 +403,102 @@
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:text="Vegan"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/rounded_category"
-                        android:fontFamily="@font/instrumentsansbold"
-                        android:textSize="12sp"
-                        android:paddingVertical="0dp"
-                        android:backgroundTint="@color/light_gray"
-                        android:paddingHorizontal="10dp"
+                        android:fontFamily="@font/instrumentsans"
                         android:textAllCaps="false"
-                        android:layout_marginEnd="10dp"/>
+                        android:paddingVertical="0dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="5dp"
+                        android:textSize="10sp"
+                        android:minWidth="0dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/rounded_category"
+                        android:backgroundTint="@color/light_gray"
+                        />
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:text="Breakfast"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/rounded_category"
-                        android:backgroundTint="@color/light_gray"
-                        android:fontFamily="@font/instrumentsansbold"
-                        android:textSize="12sp"
+                        android:fontFamily="@font/instrumentsans"
+                        android:textAllCaps="false"
                         android:paddingVertical="0dp"
                         android:paddingHorizontal="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="5dp"
+                        android:textSize="10sp"
+                        android:minWidth="0dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/rounded_category"
+                        android:backgroundTint="@color/light_gray"
+                        />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="Salty"
+                        android:fontFamily="@font/instrumentsans"
                         android:textAllCaps="false"
-                        android:layout_marginEnd="10dp"/>
+                        android:paddingVertical="0dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="10dp"
+                        android:layout_marginStart="5dp"
+                        android:minWidth="0dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/rounded_category"
+                        android:backgroundTint="@color/light_gray"
+                        />
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:text="Lunch"
-                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/instrumentsans"
+                        android:textAllCaps="false"
                         android:paddingVertical="0dp"
-                        android:fontFamily="@font/instrumentsansbold"
                         android:paddingHorizontal="10dp"
-                        android:backgroundTint="@color/light_gray"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="10dp"
+                        android:minWidth="0dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
                         android:background="@drawable/rounded_category"
-                        android:textSize="12sp"
-                        android:textAllCaps="false"/>
+                        android:backgroundTint="@color/light_gray"
+                        />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="Medium"
+                        android:fontFamily="@font/instrumentsans"
+                        android:textAllCaps="false"
+                        android:paddingVertical="0dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="10dp"
+                        android:minWidth="0dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/rounded_category"
+                        android:backgroundTint="@color/light_gray"
+                        />
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="Dinner"
+                        android:fontFamily="@font/instrumentsans"
+                        android:textAllCaps="false"
+                        android:paddingVertical="0dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="10dp"
+                        android:minWidth="0dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/rounded_category"
+                        android:backgroundTint="@color/light_gray"
+                        />
                 </com.google.android.flexbox.FlexboxLayout>
             </LinearLayout>
         </LinearLayout>
@@ -436,7 +511,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:fontFamily="@font/instrumentsans"
+                android:fontFamily="@font/instrumentsansmedium"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -445,7 +520,7 @@
                 android:textColor="@color/dark" />
 
             <TextView
-                android:fontFamily="@font/instrumentsans"
+                android:fontFamily="@font/instrumentsansmedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -490,7 +565,7 @@
             <CheckBox
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/checkBox"
-                android:layout_marginLeft="90dp"
+                android:layout_marginLeft="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -504,7 +579,7 @@
 
             <Button
                 android:id="@+id/btnSave"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="35dp"
                 android:text="Save"
                 android:fontFamily="@font/instrumentsansbold"
