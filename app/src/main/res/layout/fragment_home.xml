@@ -88,107 +88,166 @@
 
     </LinearLayout>
 
-    <!-- Categories section -->
     <TextView
         android:id="@+id/tvCategories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Categories"
+        android:fontFamily="@font/instrumentsans"
         android:textColor="#333333"
         android:textSize="16sp"
         android:textStyle="bold" />
 
-    <!-- First row of categories -->
     <LinearLayout
-        android:id="@+id/layoutRow1"
+        android:id="@+id/categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal">
+        android:background="#F5F5F5"
+        android:orientation="vertical"
+        android:padding="0dp">
 
-        <Button
-            android:id="@+id/btnBreakfast"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
+            android:orientation="horizontal">
 
-            android:background="@drawable/category_button_background"
-            android:minHeight="36dp"
-            android:text="Breakfast"
-            android:textColor="#333333"
-            android:textSize="12sp" />
+            <ToggleButton
+                android:id="@+id/toggleBreakfast"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_category_selector"
+                android:textColor="@drawable/toggle_text_color_selector"
+                android:textOff="Breakfast"
+                android:textOn="Breakfast"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                 />
 
-        <Button
-            android:id="@+id/btnLunch"
-            android:layout_width="0dp"
+            <ToggleButton
+                android:id="@+id/toggleLunch"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_category_selector"
+                android:textColor="@drawable/toggle_text_color_selector"
+                android:textOff="Lunch"
+                android:textOn="Lunch"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                />
+
+            <ToggleButton
+                android:id="@+id/toggleDinner"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_category_selector"
+                android:textColor="@drawable/toggle_text_color_selector"
+                android:textOff="Dinner"
+                android:textOn="Dinner"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                />
+
+            <ToggleButton
+                android:id="@+id/toggleSnack"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_category_selector"
+                android:textColor="@drawable/toggle_text_color_selector"
+                android:textOff="Snack"
+                android:textOn="Snack"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/category_button_background"
-            android:minHeight="36dp"
-            android:text="Lunch"
-            android:textColor="#333333"
-            android:textSize="12sp" />
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnDinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/category_button_selected_background"
-            android:minHeight="36dp"
-            android:text="Dinner"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            <ToggleButton
+                android:id="@+id/toggleEasy"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_category_selector"
+                android:textColor="@drawable/toggle_text_color_selector"
+                android:textOff="Easy"
+                android:textOn="Easy"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                />
+
+            <ToggleButton
+                android:id="@+id/toggleMedium"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_category_selector"
+                android:textColor="@drawable/toggle_text_color_selector"
+                android:textOff="Medium"
+                android:textOn="Medium"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                />
+
+            <ToggleButton
+                android:id="@+id/toggleVegan"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_category_selector"
+                android:textColor="@drawable/toggle_text_color_selector"
+                android:textOff="Vegan"
+                android:textOn="Vegan"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                />
+
+            <ToggleButton
+                android:id="@+id/toggleSpicy"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/toggle_category_selector"
+                android:textColor="@drawable/toggle_text_color_selector"
+                android:textOff="Spicy"
+                android:textOn="Spicy"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
     </LinearLayout>
-
-    <!-- Second row of categories -->
-    <LinearLayout
-        android:id="@+id/layoutRow2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnVegan"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/category_button_selected_background"
-            android:minHeight="36dp"
-            android:text="Vegan"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/btnBeverage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/category_button_background"
-            android:minHeight="36dp"
-            android:text="Beverage"
-            android:textColor="#333333"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/btnSpicy"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/category_button_background"
-            android:minHeight="36dp"
-            android:text="Spicy"
-            android:textColor="#333333"
-            android:textSize="12sp" />
-    </LinearLayout>
-
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
