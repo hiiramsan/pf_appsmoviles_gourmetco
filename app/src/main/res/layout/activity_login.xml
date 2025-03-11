@@ -40,33 +40,9 @@
         android:textColor="@color/dark"
         android:layout_marginTop="16dp"/>
 
-    <!-- oigan hay dos opciones para los inputs, los editText's y los
-        relatives layouts con la imagen y el texto adentro
-    -->
-    <!--
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:drawableStart="@drawable/ic_email"
-        android:inputType="textEmailAddress"
-        android:fontFamily="@font/instrumentsans"
-        android:padding="12dp"
-        />
-
-    <EditText
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:drawableStart="@drawable/ic_password"
-        android:inputType="textPassword"
-        android:fontFamily="@font/instrumentsans"
-        android:padding="12dp"
-        android:layout_marginTop="8dp"/>
--->
     <RelativeLayout
         android:layout_width="300dp"
-        android:layout_height="wrap_content">
+        android:layout_height="60dp">  <!-- Changed from 50dp to 60dp to match EditText height -->
 
         <ImageView
             android:id="@+id/email_icon"
@@ -79,34 +55,40 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:paddingStart="32dp"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            style="@style/Widget.AppCompat.EditText"
             />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="300dp"
-        android:layout_height="wrap_content">
+        android:layout_height="60dp">
 
-    <ImageView
-        android:id="@+id/password_icon"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/ic_password"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:padding="4dp"/>
+        <ImageView
+            android:id="@+id/password_icon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_password"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="4dp"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingStart="32dp"
-        />
-</RelativeLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingStart="32dp"
+            android:singleLine="true"
+            android:gravity="center_vertical"
+            style="@style/Widget.AppCompat.EditText"
+            />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/continueButton"
@@ -118,6 +100,7 @@
         android:fontFamily="@font/instrumentsansbold"
         android:textAllCaps="false"
         android:textSize="14dp"
+        android:background="@drawable/category_button_background"
         android:layout_marginTop="16dp"/>
 
     <TextView
