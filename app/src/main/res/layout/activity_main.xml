@@ -29,16 +29,15 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/mobile_navigation" />
 
-    <!--
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="396dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,7 +75,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="132dp"
-                android:layout_marginLeft="6dp"
+                android:layout_marginLeft="3dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="6dp"
                 android:layout_marginBottom="16dp"
@@ -92,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="0dp"
+                        android:layout_marginBottom="-1dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/spinachsalad" />
 
@@ -132,24 +131,25 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_width="75dp"
+                    android:layout_height="29dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="10dp"
                     android:background="@drawable/rounded_background_etiquetas"
                     android:padding="6dp"
-                    android:text="Fast"
+                    android:text="Breakfast"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="75dp"
+                    android:layout_height="29dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/rounded_background_etiquetas"
                     android:padding="6dp"
-                    android:text="Breakfast"
+                    android:text="Fast"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"
                     android:textSize="12sp" />
@@ -164,8 +164,10 @@
                 android:textColor="#564E58"
                 android:textSize="14sp" />
         </LinearLayout>
+
+
     </ScrollView>
-    -->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
