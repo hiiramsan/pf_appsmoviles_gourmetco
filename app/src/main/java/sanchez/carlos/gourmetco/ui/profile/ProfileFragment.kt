@@ -9,12 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
-import sanchez.carlos.gourmetco.MainActivity
 import sanchez.carlos.gourmetco.R
+import sanchez.carlos.gourmetco.ui.LoginActivity
+
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import sanchez.carlos.gourmetco.MainActivity
 
 class ProfileFragment : Fragment() {
 
     private lateinit var back : ImageButton
+    private lateinit var btnLogOut : Button
 
     companion object {
         fun newInstance() = ProfileFragment()
@@ -39,10 +44,18 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         back = view.findViewById(R.id.btn_back)
+        btnLogOut = view.findViewById(R.id.btn_logOut)
 
         back.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)
         }
+
+        btnLogOut.setOnClickListener({
+            Firebase.auth.signOut()
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        })
     }
 }
