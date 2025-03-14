@@ -58,12 +58,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_x="12dp"
-                android:layout_y="0dp"
+                android:layout_x="41dp"
+                android:layout_y="2dp"
                 android:paddingRight="8dp"
                 android:text="Spinach Salad"
                 android:textColor="#252627"
-                android:textSize="32sp"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -73,17 +73,16 @@
                 app:layout_constraintVertical_bias="0.302"
                 tools:ignore="MissingConstraints" />
 
-
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="71dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginStart="120dp"
                 android:layout_x="239dp"
-                android:layout_y="10dp"
+                android:layout_y="17dp"
                 android:text="Shared by "
                 android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.714"
@@ -94,13 +93,13 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="97dp"
+                android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:layout_x="309dp"
-                android:layout_y="11dp"
+                android:layout_x="298dp"
+                android:layout_y="17dp"
                 android:text="Carlos Hiram"
                 android:textColor="#564E58"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -114,8 +113,8 @@
                 android:layout_width="50dp"
                 android:layout_height="28dp"
                 android:layout_marginStart="5dp"
-                android:layout_x="96dp"
-                android:layout_y="46dp"
+                android:layout_x="134dp"
+                android:layout_y="45dp"
                 android:background="@drawable/rounded_background_etiquetas"
                 android:padding="6dp"
                 android:text="Fast"
@@ -132,10 +131,10 @@
 
             <TextView
                 android:id="@+id/textViewBreakfast"
-                android:layout_width="76dp"
+                android:layout_width="75dp"
                 android:layout_height="28dp"
                 android:layout_marginStart="5dp"
-                android:layout_x="15dp"
+                android:layout_x="41dp"
                 android:layout_y="46dp"
                 android:background="@drawable/rounded_background_etiquetas"
                 android:padding="6dp"
@@ -157,8 +156,8 @@
                 android:layout_height="28dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="180dp"
-                android:layout_x="332dp"
-                android:layout_y="45dp"
+                android:layout_x="302dp"
+                android:layout_y="44dp"
                 android:background="@drawable/rounded_background_etiquetas"
                 android:drawableStart="@drawable/love_vector"
                 android:drawablePadding="4dp"
@@ -182,21 +181,21 @@
                 android:layout_y="90dp"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_x="40dp"
-                android:layout_y="194dp"
+                android:layout_y="187dp"
                 android:text="Ingredients"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:textStyle="bold" />
 
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="336dp"
                 android:layout_height="42dp"
                 android:layout_x="37dp"
                 android:layout_y="270dp"
@@ -213,9 +212,9 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="220dp"
-                    android:text="70 \n grams"
+                    android:layout_height="42dp"
+                    android:layout_marginStart="210dp"
+                    android:text="70 \ngrams"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -223,7 +222,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="347dp"
+                android:layout_width="336dp"
                 android:layout_height="wrap_content"
                 android:layout_x="37dp"
                 android:layout_y="219dp"
@@ -241,7 +240,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="210dp"
+                    android:layout_marginStart="205dp"
                     android:text="1 \n cup"
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -250,7 +249,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="347dp"
+                android:layout_width="336dp"
                 android:layout_height="wrap_content"
                 android:layout_x="37dp"
                 android:layout_y="320dp"
@@ -268,7 +267,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="270dp"
+                    android:layout_marginStart="260dp"
                     android:text="1/2 \n cup"
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -277,7 +276,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="347dp"
+                android:layout_width="336dp"
                 android:layout_height="wrap_content"
                 android:layout_x="37dp"
                 android:layout_y="374dp"
@@ -295,13 +294,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="180dp"
+                    android:layout_marginStart="168dp"
                     android:text="24 \ngrams"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
             </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
