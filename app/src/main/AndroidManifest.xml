@@ -29,6 +29,10 @@
             android:exported="true"
             android:label="@string/app_name" >
         </activity>
+        <!-- i think here should be instanced DetallesReceta activity, as well as others.
+             Check later, i'm busy...
+        -->
+
     </application>
 
 </manifest>

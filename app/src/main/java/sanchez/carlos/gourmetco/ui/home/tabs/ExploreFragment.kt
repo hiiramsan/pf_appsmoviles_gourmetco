@@ -1,11 +1,17 @@
 package sanchez.carlos.gourmetco.ui.home.tabs
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.ListView
+import android.widget.TextView
 import sanchez.carlos.gourmetco.R
+import sanchez.carlos.gourmetco.Recipe
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +42,15 @@ class ExploreFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_explore, container, false)
+
+        val recipes = listOf(
+            Recipe("Spinach Salad", R.drawable.salad, "165 cal", "15 min", "Carlos Sanchez"),
+            Recipe("Avocado Toast", R.drawable.toast, "250 cal", "10 min", "Cristi Castro")
+        )
+
+        val listView = view?.findViewById<ListView>(R.id.lvRecipes)
+        listView?.adapter = RecipeAdapter(requireContext(), recipes)
+
     }
 
     companion object {
