@@ -12,6 +12,7 @@ import android.widget.ListView
 import android.widget.TextView
 import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.Recipe
+import sanchez.carlos.gourmetco.ui.RecipeAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
