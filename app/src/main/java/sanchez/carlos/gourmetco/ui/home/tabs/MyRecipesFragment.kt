@@ -45,7 +45,7 @@ class MyRecipesFragment : Fragment() {
 
         val recipes = listOf(
             Recipe("Spinach Salad", R.drawable.salad, "165 cal", "15 min", "Carlos Sanchez"),
-            Recipe("Avocado Toast", R.drawable.toast, "250 cal", "10 min", "Cristi Castro")
+            Recipe("Avocado Toast", R.drawable.salad, "250 cal", "10 min", "Cristi Castro")
         )
 
         val listView = view?.findViewById<ListView>(R.id.lvRecipes)

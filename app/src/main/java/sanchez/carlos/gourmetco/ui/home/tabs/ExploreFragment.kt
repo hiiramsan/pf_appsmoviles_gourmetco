@@ -42,15 +42,18 @@ class ExploreFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_explore, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val recipes = listOf(
             Recipe("Spinach Salad", R.drawable.salad, "165 cal", "15 min", "Carlos Sanchez"),
-            Recipe("Avocado Toast", R.drawable.toast, "250 cal", "10 min", "Cristi Castro")
+            Recipe("Avocado Toast", R.drawable.salad, "250 cal", "10 min", "Cristi Castro")
         )
 
-        val listView = view?.findViewById<ListView>(R.id.lvRecipes)
-        listView?.adapter = RecipeAdapter(requireContext(), recipes)
-
+        val listView = view.findViewById<ListView>(R.id.lvRecipes)
+        listView.adapter = RecipeAdapter(requireContext(), recipes)
     }
 
     companion object {
