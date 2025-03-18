@@ -15,20 +15,22 @@ import sanchez.carlos.gourmetco.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUpActivity : AppCompatActivity() {
 
     // variables
-    lateinit var loginTextView : TextView
-    lateinit var continueButton : Button
+    lateinit var loginTextView: TextView
+    lateinit var continueButton: Button
 
     // auth
-    private lateinit var name : EditText
-    private lateinit var email : EditText
-    private lateinit var password : EditText
-    private lateinit var confirmPassword : EditText
+    private lateinit var name: EditText
+    private lateinit var email: EditText
+    private lateinit var password: EditText
+    private lateinit var confirmPassword: EditText
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,7 @@ class SignUpActivity : AppCompatActivity() {
 
         // auth
         auth = Firebase.auth
+        db = FirebaseFirestore.getInstance()
 
         name = findViewById(R.id.et_fullName)
         email = findViewById(R.id.et_email)
@@ -48,42 +51,34 @@ class SignUpActivity : AppCompatActivity() {
         continueButton = findViewById(R.id.continueButton)
 
         continueButton.setOnClickListener{
-            if(email.text.isEmpty() || password.text.isEmpty() || confirmPassword.text.isEmpty()){
-               /*
-                errorTv.text = "Todos los campos deben de ser llenados"
-                errorTv.visibility = View.VISIBLE
-                */
+            if(email.text.isEmpty() || password.text.isEmpty() || confirmPassword.text.isEmpty() || name.text.isEmpty()){
+                Toast.makeText(this, "Todos los campos deben ser llenados", Toast.LENGTH_SHORT).show()
             } else if (!password.text.toString().equals(confirmPassword.text.toString())){
-                /*
-                errorTv.text = "Las contraseñas no coinciden"
-                errorTv.visibility = View.VISIBLE
-                 */
+                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
             } else {
-                /*
-                errorTv.visibility = View.INVISIBLE
-                 */
-                signIn(email.text.toString(), password.text.toString())
+                signUp(email.text.toString(), password.text.toString(), name.text.toString())
             }
         }
 
         // go to register screen
-        loginTextView.setOnClickListener{
+        loginTextView.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
     }
 
-    private fun signIn(email:String, password: String){
+    private fun signUp(email: String, password: String, fullName: String) {
         Log.d("INFO", "email: ${email}, password: ${password}")
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
-                if(task.isSuccessful){
+                if (task.isSuccessful) {
                     Log.d("INFO", "signInWithEmail:success")
                     val user = auth.currentUser
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
+                    user?.let {
+                        guardarDatosUser(it.uid, fullName, email)
+                        goToMain(it.uid, email)
+                    }
                 } else {
                     Log.w("ERROR", "signInWithEmail:failure", task.exception)
                     Toast.makeText(
@@ -93,5 +88,28 @@ class SignUpActivity : AppCompatActivity() {
                     ).show()
                 }
             }
+    }
+
+    private fun guardarDatosUser(uid: String, fullName: Any, email: String) {
+        val user = hashMapOf(
+            "uid" to uid,
+            "fullName" to fullName,
+            "email" to email
+        )
+        db.collection("users").document(uid).set(user)
+            .addOnSuccessListener {
+                Log.d("INFO", "Usuario guardado en Firestore")
+            }
+            .addOnFailureListener { e ->
+                Log.w("ERROR", "Error guardando usuario en Firestore", e)
+            }
+    }
+
+    private fun goToMain(uid: String, email: String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("user", email)
+        intent.putExtra("uid", uid)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 }

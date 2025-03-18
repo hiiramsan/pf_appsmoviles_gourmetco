@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
 
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var password : EditText
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,11 +61,29 @@ class LoginActivity : AppCompatActivity() {
             { task ->
                 if(task.isSuccessful){
                     val user = auth.currentUser
+                    user?.let {
+                        guardarDatosUser(it)
+                        goToMain(it)
+                    }
                    // showError(visible = false)
                     goToMain(user!!)
                 } else {
                    // showError("Usuario y/o contraseña equivocados", true)
                 }
+            }
+    }
+
+    private fun guardarDatosUser(user: FirebaseUser) {
+        val userData = hashMapOf(
+            "email" to user.email,
+            "uid" to user.uid
+        )
+        db.collection("users").document(user.uid).set(userData)
+            .addOnSuccessListener {
+                // Datos guardados correctamente
+            }
+            .addOnFailureListener {
+                // Error al guardar datos
             }
     }
 
@@ -86,6 +106,7 @@ class LoginActivity : AppCompatActivity() {
     private fun goToMain(user: FirebaseUser){
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("user", user.email)
+        intent.putExtra("uid", user.uid)
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
     }
