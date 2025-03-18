@@ -18,8 +18,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUpActivity : AppCompatActivity() {
-
-    // variables
+  // variables
     lateinit var loginTextView: TextView
     lateinit var continueButton: Button
 
@@ -113,3 +112,5 @@ class SignUpActivity : AppCompatActivity() {
         startActivity(intent)
     }
 }
+
+    

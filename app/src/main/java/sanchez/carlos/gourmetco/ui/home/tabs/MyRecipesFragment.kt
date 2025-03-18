@@ -1,11 +1,19 @@
 package sanchez.carlos.gourmetco.ui.home.tabs
 
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.google.android.flexbox.FlexboxLayout
 import sanchez.carlos.gourmetco.R
+import sanchez.carlos.gourmetco.Recipe
+import sanchez.carlos.gourmetco.ui.RecipeAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,6 +44,42 @@ class MyRecipesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_recipes, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val recipes = listOf(
+            Recipe("Spinach Salad", R.drawable.salad, "165 cal", "15 min", "Carlos Sanchez", listOf("Fast", "Breakfast")),
+            Recipe("Avocado Toast", R.drawable.salad, "250 cal", "10 min", "Cristi Castro", listOf("Fast", "Breakfast"))
+        )
+
+        val listView = view.findViewById<ListView>(R.id.lvRecipes)
+        listView.adapter = RecipeAdapter(requireContext(), recipes)
+    }
+
+    // para cateogorias
+    fun addCategories(flexbox: FlexboxLayout, categories: List<String>, context: Context) {
+        flexbox.removeAllViews()
+
+        for (category in categories) {
+            val categoryTextView = TextView(context).apply {
+                text = category
+                setPadding(16, 8, 16, 8)
+                setTextColor(Color.WHITE)
+                textSize = 12f
+                background = ContextCompat.getDrawable(context, R.drawable.rounded_background_etiquetas)
+            }
+
+            val params = FlexboxLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(8, 4, 8, 4)
+            }
+
+            flexbox.addView(categoryTextView, params)
+        }
     }
 
     companion object {
