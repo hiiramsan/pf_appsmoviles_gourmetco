@@ -13,7 +13,6 @@ import sanchez.carlos.gourmetco.MainActivity
 import sanchez.carlos.gourmetco.R
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -37,7 +36,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         // auth
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
         name = findViewById(R.id.et_fullName)
