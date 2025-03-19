@@ -2,91 +2,107 @@ package sanchez.carlos.gourmetco.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import sanchez.carlos.gourmetco.MainActivity
-import sanchez.carlos.gourmetco.R
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import sanchez.carlos.gourmetco.MainActivity
+import sanchez.carlos.gourmetco.R
 
 class LoginActivity : AppCompatActivity() {
 
-    // variables
-    private lateinit var registerTextView : TextView
-    private lateinit var continueButton : Button
+    private lateinit var signUpTextView: TextView
+    private lateinit var loginButton: Button
 
-    // auth
-    private lateinit var email : EditText
-    private lateinit var password : EditText
+    private lateinit var email: EditText
+    private lateinit var password: EditText
 
     private lateinit var auth: FirebaseAuth
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
-        // auth
         auth = Firebase.auth
-        onStart()
 
         email = findViewById(R.id.et_email)
         password = findViewById(R.id.et_password)
-        continueButton = findViewById(R.id.continueButton)
-        registerTextView = findViewById(R.id.registerTextView)
 
-        // go to home apge
-        continueButton.setOnClickListener {
-            login(email.text.toString(), password.text.toString())
+        signUpTextView = findViewById(R.id.registerTextView)
+        loginButton = findViewById(R.id.continueButton)
+
+        loginButton.setOnClickListener {
+            validateAndLogin()
         }
 
-        // go to register screen
-        registerTextView.setOnClickListener{
-            val intent = Intent(this, SignUpActivity::class.java)
-            startActivity(intent)
+        signUpTextView.setOnClickListener {
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
 
-    private fun login(email:String, password: String){
+    private fun validateAndLogin() {
+        val emailText = email.text.toString().trim()
+        val passwordText = password.text.toString()
+
+        if (emailText.isEmpty() || passwordText.isEmpty()) {
+            Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        login(emailText, passwordText)
+    }
+
+    private fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this)
-            { task ->
-                if(task.isSuccessful){
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
                     val user = auth.currentUser
-                   // showError(visible = false)
-                    goToMain(user!!)
+                    user?.let {
+                        val uid = it.uid
+                        checkUserInFirestore(uid)
+                    }
                 } else {
-                   // showError("Usuario y/o contraseña equivocados", true)
+                    Log.w("ERROR", "Error en el inicio de sesión", task.exception)
+                    Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
-    /*
-    private fun showError(text: String = "", visible:Boolean){
-        val errorTv: TextView = findViewById(R.id.tvError)
-        errorTv.text = text
-        errorTv.visibility = if (visible) View.VISIBLE else View.GONE
-    }
-    */
+    private fun checkUserInFirestore(uid: String) {
+        db.collection("users").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val fullName = document.getString("fullName") ?: "Usuario"
+                    val email = document.getString("email") ?: "Desconocido"
 
-    public override fun onStart(){
-        super.onStart()
-        val currentUser = auth.currentUser
-        if(currentUser != null){
-            goToMain(currentUser)
-        }
+                    Log.d("INFO", "Usuario encontrado: $fullName, $email")
+
+                    Toast.makeText(this, "Bienvenido $fullName", Toast.LENGTH_SHORT).show()
+                    goToMain()
+                } else {
+                    Log.w("ERROR", "Usuario no encontrado en Firestore")
+                    Toast.makeText(this, "Error: Usuario no registrado en Firestore", Toast.LENGTH_SHORT).show()
+                    auth.signOut()
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.w("ERROR", "Error al consultar Firestore", e)
+                Toast.makeText(this, "Error al validar usuario", Toast.LENGTH_SHORT).show()
+            }
     }
 
-    private fun goToMain(user: FirebaseUser){
+    private fun goToMain() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("user", user.email)
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 }

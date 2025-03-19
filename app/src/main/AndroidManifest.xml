@@ -35,4 +35,9 @@
 
     </application>
 
+    <meta-data
+            android:name="com.google.firebase.firestore"
+            android:value="true"/>
+
+
 </manifest>
