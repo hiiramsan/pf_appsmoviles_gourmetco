@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:layout_marginBottom="10dp">
+
+    <EditText
+            android:id="@+id/etIngredientName"
+            android:fontFamily="@font/instrumentsans"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:hint="Egg"
+            android:textColorHint="@color/placeholder"
+            android:textColor="@color/dark"
+            android:background="@drawable/edit_text_bg"
+            android:padding="10dp"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="15dp"
+            android:inputType="text" />
+
+    <EditText
+            android:id="@+id/etIngredientQty"
+            android:fontFamily="@font/instrumentsans"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:hint="4"
+            android:textColorHint="@color/placeholder"
+            android:background="@drawable/edit_text_bg"
+            android:padding="10dp"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="15dp"
+            android:inputType="number" />
+
+    <Spinner
+            android:id="@+id/spIngredientUnit"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/edit_text_bg"
+            android:layout_marginEnd="15dp"
+            android:spinnerMode="dropdown" />
+
+    <ImageButton
+            android:id="@+id/btnDeleteIngredient"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/trash"
+            android:background="@android:color/transparent" />
+</LinearLayout>
