@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkUserInFirestore(uid: String) {
-        db.collection("users").document(uid).get()
+        db.collection("gourmetco").document("users").get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
                     val fullName = document.getString("fullName") ?: "Usuario"

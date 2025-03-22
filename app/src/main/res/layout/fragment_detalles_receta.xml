@@ -43,321 +43,231 @@
         tools:ignore="MissingConstraints" />
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="468dp"
-        android:layout_marginTop="220dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="220dp">
 
-        <AbsoluteLayout
-            android:layout_width="410dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_x="41dp"
-                android:layout_y="2dp"
-                android:paddingRight="8dp"
-                android:text="Spinach Salad"
-                android:textColor="#252627"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.055"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.302"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_marginStart="120dp"
-                android:layout_x="239dp"
-                android:layout_y="17dp"
-                android:text="Shared by "
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.714"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.3"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:layout_x="298dp"
-                android:layout_y="17dp"
-                android:text="Carlos Hiram"
-                android:textColor="#564E58"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.298" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="50dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="5dp"
-                android:layout_x="134dp"
-                android:layout_y="45dp"
-                android:background="@drawable/rounded_background_etiquetas"
-                android:padding="6dp"
-                android:text="Fast"
-                android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.044"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.356"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/textViewBreakfast"
-                android:layout_width="75dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="5dp"
-                android:layout_x="41dp"
-                android:layout_y="46dp"
-                android:background="@drawable/rounded_background_etiquetas"
-                android:padding="6dp"
-                android:text="Lunch"
-                android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.044"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.356"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="67dp"
-                android:layout_height="28dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="180dp"
-                android:layout_x="302dp"
-                android:layout_y="44dp"
-                android:background="@drawable/rounded_background_etiquetas"
-                android:drawableStart="@drawable/love_vector"
-                android:drawablePadding="4dp"
-                android:padding="6dp"
-                android:text="13"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.92"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.356"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:layout_width="339dp"
-                android:layout_height="wrap_content"
-                android:layout_x="41dp"
-                android:layout_y="90dp"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-                android:textColor="@color/black"
-                android:textSize="13sp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="1000dp"
+                android:orientation="vertical">
 
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_x="40dp"
-                android:layout_y="187dp"
-                android:text="Ingredients"
-                android:textColor="@color/black"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="336dp"
-                android:layout_height="42dp"
-                android:layout_x="37dp"
-                android:layout_y="270dp"
-                android:background="@drawable/rounded_background_likes">
-
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_x="46dp"
-                    android:layout_y="220dp"
-                    android:text="Red apple"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:layout_marginStart="5dp"
+                    android:layout_x="41dp"
+                    android:layout_y="2dp"
+                    android:paddingRight="8dp"
+                    android:text="Spinach Salad"
+                    android:textColor="#252627"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.05"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.046"
+                    tools:ignore="MissingConstraints" />
 
-                <TextView
+            <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
-                    android:layout_height="42dp"
-                    android:layout_marginStart="210dp"
-                    android:text="70 \ngrams"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="120dp"
+                    android:layout_x="239dp"
+                    android:layout_y="17dp"
+                    android:text="Shared by "
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.615"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.084"
+                    tools:ignore="MissingConstraints" />
+
+            <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:layout_x="298dp"
+                    android:layout_y="17dp"
+                    android:text="Carlos Hiram"
+                    android:textColor="#564E58"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.952"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.083" />
+
+            <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="50dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_x="134dp"
+                    android:layout_y="45dp"
+                    android:background="@drawable/rounded_background_etiquetas"
+                    android:padding="6dp"
+                    android:text="Fast"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.317"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.19"
+                    tools:ignore="MissingConstraints" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="336dp"
-                android:layout_height="wrap_content"
-                android:layout_x="37dp"
-                android:layout_y="219dp"
-                android:background="@drawable/rounded_background_likes">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_x="46dp"
-                    android:layout_y="220dp"
-                    android:text="Raw spinach"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="205dp"
-                    android:text="1 \n cup"
+            <TextView
+                    android:id="@+id/textViewBreakfast"
+                    android:layout_width="75dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_x="41dp"
+                    android:layout_y="46dp"
+                    android:background="@drawable/rounded_background_etiquetas"
+                    android:padding="6dp"
+                    android:text="Lunch"
                     android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.042"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.19"
+                    tools:ignore="MissingConstraints" />
+
+
+            <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="67dp"
+                    android:layout_height="28dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="180dp"
+                    android:layout_x="302dp"
+                    android:layout_y="44dp"
+                    android:background="@drawable/rounded_background_etiquetas"
+                    android:drawableStart="@drawable/love_vector"
+                    android:drawablePadding="4dp"
+                    android:padding="6dp"
+                    android:text="13"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.835"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.189"
+                    tools:ignore="MissingConstraints" />
+
+
+            <TextView
+                    android:layout_width="339dp"
+                    android:layout_height="wrap_content"
+                    android:layout_x="41dp"
+                    android:layout_y="90dp"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
                     android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:textSize="13sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.381" />
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="336dp"
-                android:layout_height="wrap_content"
-                android:layout_x="37dp"
-                android:layout_y="320dp"
-                android:background="@drawable/rounded_background_likes">
-
-                <TextView
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_x="46dp"
-                    android:layout_y="220dp"
-                    android:text="Nut"
+                    android:layout_x="40dp"
+                    android:layout_y="187dp"
+                    android:text="Ingredients"
                     android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.111"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.603" />
 
-                <TextView
+            <ListView
+                    android:id="@+id/listView_ingredientes"
+                    android:layout_width="337dp"
+                    android:layout_height="53dp"
+                    tools:layout_editor_absoluteY="244dp"
+                    tools:layout_editor_absoluteX="35dp" />
+
+            <TextView
+                    android:layout_width="108dp"
+                    android:layout_height="0dp"
+                    android:layout_x="40dp"
+                    android:layout_y="434dp"
+                    android:text="Preparation"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteY="353dp"
+                    tools:layout_editor_absoluteX="56dp"
+                    android:id="@+id/textView8" />
+
+
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="260dp"
-                    android:text="1/2 \n cup"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:text="Steps:"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteY="339dp"
+                    tools:layout_editor_absoluteX="19dp"
+                    android:id="@+id/textView9" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="336dp"
-                android:layout_height="wrap_content"
-                android:layout_x="37dp"
-                android:layout_y="374dp"
-                android:background="@drawable/rounded_background_likes">
-
-                <TextView
-                    android:layout_width="wrap_content"
+            <TextView
+                    android:layout_width="68dp"
                     android:layout_height="wrap_content"
-                    android:layout_x="46dp"
-                    android:layout_y="220dp"
-                    android:text="Dried cranberries"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:text="Source:"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.163"
+                    app:layout_constraintVertical_bias="1.0"
+                    android:id="@+id/textView7" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+            <TextView
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="168dp"
-                    android:text="24 \ngrams"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:text="https://www.cocinafacil.com.mx/recetas"
+                    android:textColor="@color/teal_700"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.846"
+                    app:layout_constraintVertical_bias="1.0" />
 
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_x="40dp"
-                android:layout_y="434dp"
-                android:text="Preparation"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_x="41dp"
-                android:layout_y="458dp"
-                android:text="Steps:"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="340dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_x="54dp"
-                android:layout_y="478dp"
-                android:text="1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.
-Magna aliqua. \n2. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.Consequat. \n3. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-\n4. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:layout_width="68dp"
-                android:layout_height="wrap_content"
-                android:layout_x="33dp"
-                android:layout_y="680dp"
-                android:text="Source:"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_x="107dp"
-                android:layout_y="680dp"
-                android:text="https://www.cocinafacil.com.mx/recetas"
-                android:textColor="@color/teal_700"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-        </AbsoluteLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </ScrollView>

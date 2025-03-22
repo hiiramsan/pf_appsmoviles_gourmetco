@@ -1,639 +1,572 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background"
-    tools:context=".ui.create.CreateFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/background"
+        tools:context=".ui.create.CreateFragment">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    <Button
-        android:id="@+id/btnCancel"
-        android:textColor="@color/gray"
-        android:fontFamily="@font/instrumentsans"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:textAllCaps="false"
-        android:text="Cancel" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:fontFamily="@font/instrumentsansbold"
-        android:text="Add Recipe"
-        android:textAlignment="center"
-        android:textColor="@color/dark"
-        android:textSize="32sp" />
-
-        <LinearLayout
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content">
-
-        <TextView
-            android:fontFamily="@font/instrumentsansmedium"
-            android:textColor="@color/dark"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:textSize="16sp"
-            android:layout_marginBottom="5dp"
-            android:text="Name of the recipe"/>
+            android:orientation="vertical">
 
-        <EditText
-            android:fontFamily="@font/instrumentsans"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Scrambled eggs..."
-            android:textColorHint="@color/placeholder"
-            android:background="@drawable/edit_text_bg"
-            android:padding="10dp"
-            android:textSize="10sp"
-            android:layout_gravity="center"
-            android:inputType="text"/>
-
-        <TextView
-            android:fontFamily="@font/instrumentsansmedium"
-            android:textColor="@color/dark"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
-            android:text="Brief description"
-            />
-
-        <EditText
-            android:fontFamily="@font/instrumentsans"
-            android:id="@+id/multiLineText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Scrambled eggs can be one of the most fantastic, luxurious breakfasts around if you remember a few key things..."
-            android:inputType="textMultiLine"
-            android:lines="5"
-            android:maxLines="10"
-            android:textColorHint="@color/placeholder"
-            android:textColor="@color/dark"
-            android:scrollbars="vertical"
-            android:gravity="top"
-            android:background="@drawable/edit_text_bg"
-            android:padding="10dp"
-            android:textSize="10sp"
-        />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:fontFamily="@font/instrumentsansmedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:text="Ingredients"
-                android:textColor="@color/dark" />
-
-            <TextView
-                android:id="@+id/btn_add"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:text="+"
-                android:textSize="15sp"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:background="@drawable/rounded_btn_plus"
-                android:layout_gravity="center_vertical"
-            />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:fontFamily="@font/instrumentsans"
-                android:textSize="15sp"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Name"
-                android:layout_marginEnd="15dp"
-                android:textColor="@color/dark" />
-
-            <TextView
-                android:fontFamily="@font/instrumentsans"
-                android:layout_width="40dp"
-                android:textSize="15sp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Qty"
-                android:layout_marginEnd="15dp"
-                android:textColor="@color/dark" />
-
-            <TextView
+        <Button
+                android:id="@+id/btnCancel"
+                android:textColor="@color/gray"
                 android:fontFamily="@font/instrumentsans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:layout_gravity="center"
-                android:text="Unity"
-                android:textColor="@color/dark" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:fontFamily="@font/instrumentsans"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:hint="Egg"
-                android:textColorHint="@color/placeholder"
-                android:textColor="@color/dark"
-                android:background="@drawable/edit_text_bg"
-                android:padding="10dp"
-                android:textSize="10sp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="15dp"
-                android:inputType="text"/>
-
-            <EditText
-                android:fontFamily="@font/instrumentsans"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:hint="4"
-                android:textColorHint="@color/placeholder"
-                android:background="@drawable/edit_text_bg"
-                android:padding="10dp"
-                android:textSize="10sp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="15dp"
-                android:inputType="number"/>
-
-            <Spinner
-                android:id="@+id/unity"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/edit_text_bg"
-                android:layout_marginEnd="15dp"
-                android:spinnerMode="dropdown"
-            />
-
-            <ImageButton
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/trash"
                 android:background="@android:color/transparent"
-            />
-        </LinearLayout>
+                android:textAllCaps="false"
+                android:text="Cancel" />
 
         <TextView
-            android:fontFamily="@font/instrumentsansmedium"
-            android:textColor="@color/dark"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
-            android:textSize="16sp"
-            android:text="Instructions"
-            />
-
-        <EditText
-            android:fontFamily="@font/instrumentsans"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/placeholder_instructions"
-            android:inputType="textMultiLine"
-            android:lines="5"
-            android:maxLines="10"
-            android:textColorHint="@color/placeholder"
-            android:textColor="@color/dark"
-            android:scrollbars="vertical"
-            android:gravity="top"
-            android:background="@drawable/edit_text_bg"
-            android:padding="10dp"
-            android:textSize="10sp"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="104dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="30dp"
-                android:fontFamily="@font/instrumentsansmedium"
-                android:text="Add a photo"
-                android:textColor="@color/dark"
-                android:textSize="16sp" />
-
-            <TextView
-                android:fontFamily="@font/instrumentsansmedium"
-                android:textColor="@color/dark"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="Tags"
-                />
-        </LinearLayout>
+                android:layout_marginVertical="5dp"
+                android:fontFamily="@font/instrumentsansbold"
+                android:text="Add Recipe"
+                android:textAlignment="center"
+                android:textColor="@color/dark"
+                android:textSize="32sp" />
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp">
+            <TextView
+                    android:fontFamily="@font/instrumentsansmedium"
+                    android:textColor="@color/dark"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Name of the recipe" />
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_upload"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="4dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+            <EditText
+                    android:fontFamily="@font/instrumentsans"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Scrambled eggs..."
+                    android:textColorHint="@color/placeholder"
+                    android:background="@drawable/edit_text_bg"
+                    android:padding="10dp"
+                    android:textSize="10sp"
+                    android:layout_gravity="center"
+                    android:inputType="text" />
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/upload_photo">
+            <TextView
+                    android:fontFamily="@font/instrumentsansmedium"
+                    android:textColor="@color/dark"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Brief description" />
 
-                        <ImageView
-                            android:id="@+id/iv_upload_icon"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="top|center"
-                            android:layout_marginTop="20dp"
-                            android:src="@drawable/frame"/>
-
-                        <TextView
-                            android:id="@+id/tv_upload"
-                            android:layout_width="match_parent"
-                            android:textAlignment="center"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical|center_horizontal|bottom"
-                            android:text="Upload photo"
-                            android:textColor="@color/placeholder"
-                            android:textSize="12sp"
-                            android:paddingBottom="20dp"/>
-                    </FrameLayout>
-                </androidx.cardview.widget.CardView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                    android:fontFamily="@font/instrumentsans"
+                    android:id="@+id/multiLineText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Scrambled eggs can be one of the most fantastic, luxurious breakfasts around if you remember a few key things..."
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:maxLines="10"
+                    android:textColorHint="@color/placeholder"
+                    android:textColor="@color/dark"
+                    android:scrollbars="vertical"
+                    android:gravity="top"
+                    android:background="@drawable/edit_text_bg"
+                    android:padding="10dp"
+                    android:textSize="10sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.google.android.flexbox.FlexboxLayout
-                    xmlns:flexbox="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    flexbox:flexWrap="wrap"
-                    flexbox:justifyContent="flex_start"
-                    flexbox:alignItems="center">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_height="25dp"
-                        android:paddingHorizontal="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/rounded_category"
-                        android:layout_marginHorizontal="5dp"
-                        >
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="Breakfast"
-                            android:textColor="@color/green"
-                            android:fontFamily="@font/instrumentsans"
-                            android:textAllCaps="false"
-                            android:paddingVertical="0dp"
-                            android:textSize="10sp"
-                            android:minWidth="0dp"
-                            android:background="@android:color/transparent"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
-                            />
-
-                        <ImageButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/cross"
-                            />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_height="25dp"
-                        android:layout_marginBottom="10dp"
-                        android:paddingHorizontal="5dp"
-                        android:background="@drawable/rounded_category"
-                        android:layout_marginHorizontal="5dp"
-                        >
-
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="Salty"
-                            android:textColor="@color/green"
-                            android:fontFamily="@font/instrumentsans"
-                            android:textAllCaps="false"
-                            android:paddingVertical="0dp"
-                            android:textSize="10sp"
-                            android:minWidth="0dp"
-                            android:background="@android:color/transparent"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
-                            />
-
-                        <ImageButton
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/cross"
-                            />
-                    </LinearLayout>
-
-
-
-
-                </com.google.android.flexbox.FlexboxLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="19dp"
+                    android:layout_marginVertical="20dp"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                <TextView
+                        android:fontFamily="@font/instrumentsansmedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rounded_btn"
-                        android:fontFamily="@font/instrumentsans"
-                        android:hint="New tag..."
-                        android:textColor="@color/black"
-                        android:inputType="text"
-                        android:layout_marginVertical="0dp"
-                        android:paddingHorizontal="10dp"
-                        android:textColorHint="@color/placeholder"
-                        android:textSize="10sp"
-                        android:gravity="center_vertical" />
+                        android:textSize="16sp"
+                        android:text="Ingredients"
+                        android:textColor="@color/dark" />
 
-                    <ImageButton
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@drawable/circle_btn_plus"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/plus"
-                    />
+                <TextView
+                        android:id="@+id/btn_add"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:text="+"
+                        android:textSize="15sp"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:background="@drawable/rounded_btn_plus"
+                        android:layout_gravity="center_vertical" />
+            </LinearLayout>
 
-                </LinearLayout>
-
-                <com.google.android.flexbox.FlexboxLayout
-                    xmlns:flexbox="http://schemas.android.com/apk/res-auto"
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    flexbox:flexWrap="wrap"
-                    flexbox:justifyContent="flex_start"
-                    flexbox:alignItems="center">
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:text="Vegan"
+                <TextView
                         android:fontFamily="@font/instrumentsans"
-                        android:textAllCaps="false"
-                        android:paddingVertical="0dp"
-                        android:paddingHorizontal="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginStart="5dp"
-                        android:textSize="10sp"
-                        android:minWidth="0dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/rounded_category"
-                        android:backgroundTint="@color/light_gray"
-                        />
+                        android:textSize="15sp"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Name"
+                        android:layout_marginEnd="15dp"
+                        android:textColor="@color/dark" />
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:text="Breakfast"
+                <TextView
                         android:fontFamily="@font/instrumentsans"
-                        android:textAllCaps="false"
-                        android:paddingVertical="0dp"
-                        android:paddingHorizontal="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginStart="5dp"
-                        android:textSize="10sp"
-                        android:minWidth="0dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/rounded_category"
-                        android:backgroundTint="@color/light_gray"
-                        />
+                        android:layout_width="40dp"
+                        android:textSize="15sp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Qty"
+                        android:layout_marginEnd="15dp"
+                        android:textColor="@color/dark" />
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:text="Salty"
+                <TextView
                         android:fontFamily="@font/instrumentsans"
-                        android:textAllCaps="false"
-                        android:paddingVertical="0dp"
-                        android:paddingHorizontal="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:textSize="10dp"
-                        android:layout_marginStart="5dp"
-                        android:minWidth="0dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/rounded_category"
-                        android:backgroundTint="@color/light_gray"
-                        />
-
-                    <Button
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:text="Lunch"
-                        android:fontFamily="@font/instrumentsans"
-                        android:textAllCaps="false"
-                        android:paddingVertical="0dp"
-                        android:paddingHorizontal="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:textSize="10dp"
-                        android:minWidth="0dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/rounded_category"
-                        android:backgroundTint="@color/light_gray"
-                        />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:text="Medium"
-                        android:fontFamily="@font/instrumentsans"
-                        android:textAllCaps="false"
-                        android:paddingVertical="0dp"
-                        android:paddingHorizontal="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:textSize="10dp"
-                        android:minWidth="0dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="5dp"
-                        android:background="@drawable/rounded_category"
-                        android:backgroundTint="@color/light_gray"
-                        />
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:text="Dinner"
-                        android:fontFamily="@font/instrumentsans"
-                        android:textAllCaps="false"
-                        android:paddingVertical="0dp"
-                        android:paddingHorizontal="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:textSize="10dp"
-                        android:minWidth="0dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@drawable/rounded_category"
-                        android:backgroundTint="@color/light_gray"
-                        />
-                </com.google.android.flexbox.FlexboxLayout>
+                        android:layout_height="wrap_content"
+                        android:textSize="15sp"
+                        android:layout_gravity="center"
+                        android:text="Unity"
+                        android:textColor="@color/dark" />
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal">
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             <TextView
-                android:fontFamily="@font/instrumentsansmedium"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Link (Optional)"
-                android:layout_marginEnd="15dp"
-                android:textColor="@color/dark" />
-
-            <TextView
-                android:fontFamily="@font/instrumentsansmedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Share recipe?"
-                android:textColor="@color/dark" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                    android:fontFamily="@font/instrumentsansmedium"
+                    android:textColor="@color/dark"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="16sp"
+                    android:text="Instructions" />
 
             <EditText
-                android:fontFamily="@font/instrumentsans"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:hint="https://recipes.com/recipe"
-                android:textColorHint="@color/placeholder"
-                android:background="@drawable/edit_text_bg"
-                android:padding="10dp"
-                android:textSize="10sp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="15dp"
-                android:inputType="text"/>
+                    android:fontFamily="@font/instrumentsans"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/placeholder_instructions"
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:maxLines="10"
+                    android:textColorHint="@color/placeholder"
+                    android:textColor="@color/dark"
+                    android:scrollbars="vertical"
+                    android:gravity="top"
+                    android:background="@drawable/edit_text_bg"
+                    android:padding="10dp"
+                    android:textSize="10sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="top"
-                android:layout_marginVertical="10dp"
-                android:fontFamily="@font/instrumentsans"
-                android:text="Allow others to see your recipe"
-                android:textColor="@color/dark"
-                android:textSize="10sp" />
-        </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+                <TextView
+                        android:layout_width="104dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="30dp"
+                        android:fontFamily="@font/instrumentsansmedium"
+                        android:text="Add a photo"
+                        android:textColor="@color/dark"
+                        android:textSize="16sp" />
 
-            <CheckBox
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/checkBox"
-                android:layout_marginLeft="30dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+                <TextView
+                        android:fontFamily="@font/instrumentsansmedium"
+                        android:textColor="@color/dark"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Tags" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="80dp"
-            android:orientation="vertical">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="100dp"
-                android:layout_height="35dp"
-                android:text="Save"
-                android:fontFamily="@font/instrumentsansbold"
-                android:textAllCaps="false"
-                android:paddingVertical="0dp"
-                android:paddingHorizontal="10dp"
-                android:layout_gravity="center_horizontal"
-                android:textSize="12sp"
-                android:textColor="@color/white"
-                android:layout_marginEnd="10dp"
-                android:backgroundTint="@color/green"
-                android:background="@drawable/logout_btn"
-                />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp">
+
+                    <androidx.cardview.widget.CardView
+                            android:id="@+id/card_upload"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="4dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                        <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/upload_photo">
+
+                            <ImageView
+                                    android:id="@+id/iv_upload_icon"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_gravity="top|center"
+                                    android:layout_marginTop="20dp"
+                                    android:src="@drawable/frame" />
+
+                            <TextView
+                                    android:id="@+id/tv_upload"
+                                    android:layout_width="match_parent"
+                                    android:textAlignment="center"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical|center_horizontal|bottom"
+                                    android:text="Upload photo"
+                                    android:textColor="@color/placeholder"
+                                    android:textSize="12sp"
+                                    android:paddingBottom="20dp" />
+                        </FrameLayout>
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <com.google.android.flexbox.FlexboxLayout xmlns:flexbox="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            flexbox:flexWrap="wrap"
+                            flexbox:justifyContent="flex_start"
+                            flexbox:alignItems="center">
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_height="25dp"
+                                android:paddingHorizontal="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/rounded_category"
+                                android:layout_marginHorizontal="5dp">
+
+                            <Button
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:text="Breakfast"
+                                    android:textColor="@color/green"
+                                    android:fontFamily="@font/instrumentsans"
+                                    android:textAllCaps="false"
+                                    android:paddingVertical="0dp"
+                                    android:textSize="10sp"
+                                    android:minWidth="0dp"
+                                    android:background="@android:color/transparent"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp" />
+
+                            <ImageButton
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent"
+                                    android:src="@drawable/cross" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_height="25dp"
+                                android:layout_marginBottom="10dp"
+                                android:paddingHorizontal="5dp"
+                                android:background="@drawable/rounded_category"
+                                android:layout_marginHorizontal="5dp">
+
+                            <Button
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:text="Salty"
+                                    android:textColor="@color/green"
+                                    android:fontFamily="@font/instrumentsans"
+                                    android:textAllCaps="false"
+                                    android:paddingVertical="0dp"
+                                    android:textSize="10sp"
+                                    android:minWidth="0dp"
+                                    android:background="@android:color/transparent"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="5dp" />
+
+                            <ImageButton
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@android:color/transparent"
+                                    android:src="@drawable/cross" />
+                        </LinearLayout>
+
+
+                    </com.google.android.flexbox.FlexboxLayout>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp"
+                            android:layout_marginBottom="19dp"
+                            android:orientation="horizontal">
+
+                        <EditText
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginEnd="10dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/rounded_btn"
+                                android:fontFamily="@font/instrumentsans"
+                                android:hint="New tag..."
+                                android:textColor="@color/black"
+                                android:inputType="text"
+                                android:layout_marginVertical="0dp"
+                                android:paddingHorizontal="10dp"
+                                android:textColorHint="@color/placeholder"
+                                android:textSize="10sp"
+                                android:gravity="center_vertical" />
+
+                        <ImageButton
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:background="@drawable/circle_btn_plus"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/plus" />
+
+                    </LinearLayout>
+
+                    <com.google.android.flexbox.FlexboxLayout xmlns:flexbox="http://schemas.android.com/apk/res-auto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            flexbox:flexWrap="wrap"
+                            flexbox:justifyContent="flex_start"
+                            flexbox:alignItems="center">
+
+                        <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp"
+                                android:text="Vegan"
+                                android:fontFamily="@font/instrumentsans"
+                                android:textAllCaps="false"
+                                android:paddingVertical="0dp"
+                                android:paddingHorizontal="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginStart="5dp"
+                                android:textSize="10sp"
+                                android:minWidth="0dp"
+                                android:layout_marginEnd="5dp"
+                                android:background="@drawable/rounded_category"
+                                android:backgroundTint="@color/light_gray" />
+
+                        <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp"
+                                android:text="Breakfast"
+                                android:fontFamily="@font/instrumentsans"
+                                android:textAllCaps="false"
+                                android:paddingVertical="0dp"
+                                android:paddingHorizontal="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginStart="5dp"
+                                android:textSize="10sp"
+                                android:minWidth="0dp"
+                                android:layout_marginEnd="5dp"
+                                android:background="@drawable/rounded_category"
+                                android:backgroundTint="@color/light_gray" />
+
+                        <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp"
+                                android:text="Salty"
+                                android:fontFamily="@font/instrumentsans"
+                                android:textAllCaps="false"
+                                android:paddingVertical="0dp"
+                                android:paddingHorizontal="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:textSize="10dp"
+                                android:layout_marginStart="5dp"
+                                android:minWidth="0dp"
+                                android:layout_marginEnd="5dp"
+                                android:background="@drawable/rounded_category"
+                                android:backgroundTint="@color/light_gray" />
+
+                        <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp"
+                                android:text="Lunch"
+                                android:fontFamily="@font/instrumentsans"
+                                android:textAllCaps="false"
+                                android:paddingVertical="0dp"
+                                android:paddingHorizontal="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:textSize="10dp"
+                                android:minWidth="0dp"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:background="@drawable/rounded_category"
+                                android:backgroundTint="@color/light_gray" />
+
+                        <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp"
+                                android:text="Medium"
+                                android:fontFamily="@font/instrumentsans"
+                                android:textAllCaps="false"
+                                android:paddingVertical="0dp"
+                                android:paddingHorizontal="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:textSize="10dp"
+                                android:minWidth="0dp"
+                                android:layout_marginEnd="5dp"
+                                android:layout_marginStart="5dp"
+                                android:background="@drawable/rounded_category"
+                                android:backgroundTint="@color/light_gray" />
+
+                        <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="25dp"
+                                android:text="Dinner"
+                                android:fontFamily="@font/instrumentsans"
+                                android:textAllCaps="false"
+                                android:paddingVertical="0dp"
+                                android:paddingHorizontal="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:textSize="10dp"
+                                android:minWidth="0dp"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginEnd="5dp"
+                                android:background="@drawable/rounded_category"
+                                android:backgroundTint="@color/light_gray" />
+                    </com.google.android.flexbox.FlexboxLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginVertical="10dp"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:fontFamily="@font/instrumentsansmedium"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Link (Optional)"
+                        android:layout_marginEnd="15dp"
+                        android:textColor="@color/dark" />
+
+                <TextView
+                        android:fontFamily="@font/instrumentsansmedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Share recipe?"
+                        android:textColor="@color/dark" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <EditText
+                        android:fontFamily="@font/instrumentsans"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:hint="https://recipes.com/recipe"
+                        android:textColorHint="@color/placeholder"
+                        android:background="@drawable/edit_text_bg"
+                        android:padding="10dp"
+                        android:textSize="10sp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="15dp"
+                        android:inputType="text" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="top"
+                        android:layout_marginVertical="10dp"
+                        android:fontFamily="@font/instrumentsans"
+                        android:text="Allow others to see your recipe"
+                        android:textColor="@color/dark"
+                        android:textSize="10sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <CheckBox
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/checkBox"
+                        android:layout_marginLeft="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="80dp"
+                    android:orientation="vertical">
+
+                <Button
+                        android:id="@+id/btnSave"
+                        android:layout_width="100dp"
+                        android:layout_height="35dp"
+                        android:text="Save"
+                        android:fontFamily="@font/instrumentsansbold"
+                        android:textAllCaps="false"
+                        android:paddingVertical="0dp"
+                        android:paddingHorizontal="10dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/green"
+                        android:background="@drawable/logout_btn" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
