@@ -1,6 +1,7 @@
 package sanchez.carlos.gourmetco.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,10 +21,8 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
-    // obtener usuario para poner saludo en Home
-    private val auth = FirebaseAuth.getInstance()
-    private val db = FirebaseFirestore.getInstance()
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +36,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // metodo para cargar info
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        // cargar datos del user
         loadUserData()
 
         // Configurar el ViewPager2 con el adapter
@@ -55,29 +57,35 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadUserData() {
-        val user = auth.currentUser
-        user?.let {
-            val uid = it.uid
-            db.collection("users").document(uid).get()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val uid = currentUser.uid
+            db.collection("users").document(uid)
+                .get()
                 .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val fullName = document.getString("fullName") ?: "User"
-                        binding.tvGreeting.text = "Hi, $fullName"
+                    if (document != null && document.exists()) {
+                        val userName = document.getString("name") ?: "User"
+                        binding.tvGreeting.text = "Hi, $userName!"
                     } else {
-                        binding.tvGreeting.text = "Hi, User"
+                        binding.tvGreeting.text = "Hi there!"
+                        Log.d("HomeFragment", "No se encontraron datos del usuario")
                     }
                 }
-                .addOnFailureListener {
-                    binding.tvGreeting.text = "Hi, User"
+                .addOnFailureListener { e ->
+                    binding.tvGreeting.text = "Hi there!"
+                    Log.e("HomeFragment", "Error al cargar datos del usuario", e)
                 }
+        } else {
+
+            binding.tvGreeting.text = "Hi there!"
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
-
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
