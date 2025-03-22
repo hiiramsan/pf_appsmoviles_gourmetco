@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import sanchez.carlos.gourmetco.databinding.FragmentHomeBinding
 import sanchez.carlos.gourmetco.ui.home.tabs.ExploreFragment
 import sanchez.carlos.gourmetco.ui.home.tabs.MyRecipesFragment
@@ -18,6 +20,10 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    // obtener usuario para poner saludo en Home
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +36,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // metodo para cargar info
+        loadUserData()
 
         // Configurar el ViewPager2 con el adapter
         val adapter = ViewPagerAdapter(requireActivity())
@@ -45,6 +54,24 @@ class HomeFragment : Fragment() {
         }.attach()
     }
 
+    private fun loadUserData() {
+        val user = auth.currentUser
+        user?.let {
+            val uid = it.uid
+            db.collection("users").document(uid).get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val fullName = document.getString("fullName") ?: "User"
+                        binding.tvGreeting.text = "Hi, $fullName"
+                    } else {
+                        binding.tvGreeting.text = "Hi, User"
+                    }
+                }
+                .addOnFailureListener {
+                    binding.tvGreeting.text = "Hi, User"
+                }
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

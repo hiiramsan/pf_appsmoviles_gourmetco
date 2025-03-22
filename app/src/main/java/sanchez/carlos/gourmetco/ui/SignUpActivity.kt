@@ -82,19 +82,19 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    private fun saveUserToFirestore(id: String, fullName: String, email: String) {
+    private fun saveUserToFirestore(uid: String, fullName: String, email: String) {
         val user = hashMapOf(
-            "id" to id,
+            "id" to uid,
             "name" to fullName,
             "email" to email
         )
 
         Log.d("DEBUG", "Intentando guardar usuario en Firestore: $user")
 
-        db.collection("gourmetco").document("users")
+        db.collection("users").document(uid)
             .set(user)
             .addOnSuccessListener {
-                Log.d("SUCCESS", "Usuario guardado en Firestore con ID: $id")
+                Log.d("SUCCESS", "Usuario guardado en Firestore con ID: $uid")
                 Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
                 goToMain()
             }
@@ -103,7 +103,6 @@ class SignUpActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error al guardar en Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
-
 
     private fun goToMain() {
         val intent = Intent(this, MainActivity::class.java)
