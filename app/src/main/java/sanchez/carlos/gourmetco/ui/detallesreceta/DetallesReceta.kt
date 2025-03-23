@@ -29,11 +29,13 @@ class DetallesReceta : Fragment() {
     private var param2: String? = null
     var ingredients = ArrayList<Ingredient>()
 
+    //  recipe id
+    private lateinit var recipeId: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            recipeId = it.getString("recipeId") ?: ""
         }
 
         agregarIngrediente()

@@ -1,6 +1,7 @@
 package sanchez.carlos.gourmetco.ui.home.tabs
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,10 +13,13 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.google.android.flexbox.FlexboxLayout
 import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.Recipe
 import sanchez.carlos.gourmetco.ui.RecipeAdapter
+import sanchez.carlos.gourmetco.ui.detallesreceta.DetallesReceta
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,6 +62,14 @@ class ExploreFragment : Fragment() {
 
         val listView = view.findViewById<ListView>(R.id.lvRecipes)
         listView.adapter = RecipeAdapter(requireContext(), recipes)
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            findNavController().navigate(
+                R.id.action_navigation_home_to_detallesRecetaFragment,
+                bundleOf("recipeId" to 0)
+            )
+        }
+
     }
 
     // para cateogorias

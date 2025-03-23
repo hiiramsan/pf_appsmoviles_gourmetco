@@ -86,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
 
                     Log.d("INFO", "Usuario encontrado: $fullName, $email")
 
-                    Toast.makeText(this, "Bienvenido $fullName", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Bienvenido $fullName", Toast.LENGTH_SHORT).show()
                     goToMain()
                 } else {
                     Log.w("ERROR", "Usuario no encontrado en Firestore")

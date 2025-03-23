@@ -9,7 +9,12 @@
         android:id="@+id/nav_home"
         android:name="sanchez.carlos.gourmetco.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+            tools:layout="@layout/fragment_home">
+        <action
+                android:id="@+id/action_navigation_home_to_detallesRecetaFragment"
+                app:destination="@id/fragment_detalles_receta" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/nav_trending"
@@ -40,6 +45,4 @@
         android:name="sanchez.carlos.gourmetco.ui.detallesreceta.DetallesReceta"
         android:label="Detalles de Receta"
         tools:layout="@layout/fragment_detalles_receta" />
-
-
 </navigation>
