@@ -2,13 +2,15 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:background="@drawable/ingredientes_background">
 
 
     <TextView
             android:id="@+id/ing_nombre"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif-condensed"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="Caramel frap" />
@@ -17,25 +19,24 @@
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="50dp">
 
         <TextView
                 android:id="@+id/ing_cantidad"
                 android:layout_width="50dp"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-condensed"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="#9E2E81"
+                android:textColor="@color/black"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="5" />
         <TextView
                 android:id="@+id/ing_medida"
                 android:layout_width="50dp"
-                android:textSize="12sp"
-                android:fontFamily="sans-serif-condensed"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="#9E2E81"
+                android:textColor="@color/black"
                 android:layout_height="match_parent"
 
                 android:gravity="center"
