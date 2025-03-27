@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -35,6 +36,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // toggle visibility de las categorias con el btnFilter
+        binding.categoriesContainer.visibility = View.GONE
+
+        binding.btnFilter.setOnClickListener {
+            if (binding.categoriesContainer.visibility == View.VISIBLE) {
+                binding.categoriesContainer.visibility = View.GONE
+            } else {
+                binding.categoriesContainer.visibility = View.VISIBLE
+            }
+        }
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
