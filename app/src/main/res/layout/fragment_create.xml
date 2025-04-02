@@ -51,6 +51,7 @@
                     android:text="Name of the recipe" />
 
             <EditText
+                    android:id="@+id/etTitle"
                     android:fontFamily="@font/instrumentsans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,7 +76,7 @@
 
             <EditText
                     android:fontFamily="@font/instrumentsans"
-                    android:id="@+id/multiLineText"
+                    android:id="@+id/etDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Scrambled eggs can be one of the most fantastic, luxurious breakfasts around if you remember a few key things..."
@@ -172,6 +173,7 @@
                     android:text="Instructions" />
 
             <EditText
+                    android:id="@+id/etInstructions"
                     android:fontFamily="@font/instrumentsans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -219,9 +221,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical"
                         android:layout_marginEnd="30dp">
 
                     <androidx.cardview.widget.CardView
@@ -262,7 +265,19 @@
                                     android:paddingBottom="20dp" />
                         </FrameLayout>
                     </androidx.cardview.widget.CardView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                        >
+                        <ImageView
+                            android:id="@+id/ivPreview"
+                                android:layout_width="100dp"
+                                android:src="@drawable/salad"
+                                android:layout_height="100dp"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                         android:layout_width="match_parent"

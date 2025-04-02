@@ -1,6 +1,8 @@
 package sanchez.carlos.gourmetco.ui.create
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,10 +12,15 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cloudinary.android.MediaManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import sanchez.carlos.gourmetco.MainActivity
 import sanchez.carlos.gourmetco.R
 
@@ -24,9 +31,43 @@ class CreateFragment : Fragment() {
     private lateinit var btnAdd: TextView
     private lateinit var ingredientes: ArrayList<Ingredient>
 
+    // inicializar firestore things
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+
+    private lateinit var ivPreview: ImageView
+
+
+    // campos
+    private lateinit var etTitle : EditText
+    private lateinit var etDescription : EditText
+    private lateinit var etInstructions : EditText
+
+    // cloudinary setup
+    val REQUEST_IMAGE_GET = 1
+    val CLOUD_NAME = "dvznvnzam"
+    val UPLOAD_PRESET = "recipes-preset"
+    var imageUri: Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ingredientes = ArrayList()
+
+        // setear firestore things
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        // inicializar cloudinary
+        initCloudinary()
+
+
+
+    }
+
+    fun initCloudinary() {
+        val config: MutableMap<String, String> = HashMap<String, String>()
+        config["cloud_name"] = CLOUD_NAME
+        MediaManager.init(requireContext(), config)
     }
 
     override fun onCreateView(
@@ -69,6 +110,42 @@ class CreateFragment : Fragment() {
         save.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)
+        }
+
+        // MANEJAR SUBIDA DE IMAGENES
+        val upload : CardView = view.findViewById(R.id.card_upload)
+        ivPreview = view.findViewById(R.id.ivPreview)
+
+        upload.setOnClickListener {
+            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            startActivityForResult(intent, REQUEST_IMAGE_GET)
+        }
+
+
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_GET && resultCode == Activity.RESULT_OK) {
+            val fullPhotoUri: Uri? = data?.data
+
+            if(fullPhotoUri != null) {
+                imageUri = fullPhotoUri
+                changeImage(fullPhotoUri)
+            }
+        }
+    }
+
+    fun changeImage(uri: Uri) {
+        try {
+            ivPreview.setImageURI(uri)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
