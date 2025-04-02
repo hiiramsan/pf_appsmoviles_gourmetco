@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
 import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.Recipe
@@ -35,14 +36,19 @@ class RecipeAdapter(private val context: Context, private val recipes: List<Reci
         addCategories(flexbox, recipe.categories, context)
 
         title.text = recipe.title
-        image.setImageResource(recipe.image)
-        calories.text = recipe.calories
+        calories.text = "${recipe.calories} cal"
         time.text = recipe.time
-        author.text = recipe.author
+        author.text = "Shared by ${recipe.author}"
+
+        // Cargar imagen con GLide
+        Glide.with(context)
+            .load(recipe.image)
+            .into(image)
 
         return view
     }
 }
+
 
 // para cateogorias
 fun addCategories(flexbox: FlexboxLayout, categories: List<String>, context: Context) {

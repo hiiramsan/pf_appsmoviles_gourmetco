@@ -55,13 +55,9 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recipes = listOf(
-            Recipe("Spinach Salad", R.drawable.salad, "165 cal", "15 min", "Carlos Sanchez", listOf("Fast", "Breakfast")),
-            Recipe("Avocado Toast", R.drawable.salad, "250 cal", "10 min", "Cristi Castro", listOf("Fast", "Breakfast"))
-        )
 
         val listView = view.findViewById<ListView>(R.id.lvRecipes)
-        listView.adapter = RecipeAdapter(requireContext(), recipes)
+        //listView.adapter = RecipeAdapter(requireContext(), recipes)
 
         listView.setOnItemClickListener { _, _, position, _ ->
             findNavController().navigate(

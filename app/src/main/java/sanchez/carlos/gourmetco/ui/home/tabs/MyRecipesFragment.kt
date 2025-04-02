@@ -3,14 +3,19 @@ package sanchez.carlos.gourmetco.ui.home.tabs
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.flexbox.FlexboxLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.Recipe
 import sanchez.carlos.gourmetco.ui.RecipeAdapter
@@ -26,17 +31,12 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MyRecipesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var listView: ListView
+    private lateinit var recipeAdapter: RecipeAdapter
+    private var recipes = mutableListOf<Recipe>()
+    private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,37 +49,32 @@ class MyRecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recipes = listOf(
-            Recipe("Spinach Salad", R.drawable.salad, "165 cal", "15 min", "Carlos Sanchez", listOf("Fast", "Breakfast")),
-            Recipe("Avocado Toast", R.drawable.salad, "250 cal", "10 min", "Cristi Castro", listOf("Fast", "Breakfast"))
-        )
 
         val listView = view.findViewById<ListView>(R.id.lvRecipes)
-        listView.adapter = RecipeAdapter(requireContext(), recipes)
+        recipeAdapter = RecipeAdapter(requireContext(), recipes)
+        listView.adapter = recipeAdapter
+        loadUserRecipes()
     }
 
-    // para cateogorias
-    fun addCategories(flexbox: FlexboxLayout, categories: List<String>, context: Context) {
-        flexbox.removeAllViews()
+    private fun loadUserRecipes() {
+        val userId = auth.currentUser?.uid ?: return
 
-        for (category in categories) {
-            val categoryTextView = TextView(context).apply {
-                text = category
-                setPadding(16, 8, 16, 8)
-                setTextColor(Color.WHITE)
-                textSize = 12f
-                background = ContextCompat.getDrawable(context, R.drawable.rounded_background_etiquetas)
+        db.collection("recipes")
+            .whereEqualTo("userId", userId)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { documents ->
+                recipes.clear()
+                for (document in documents) {
+                    val recipe = document.toObject(Recipe::class.java)
+                    recipes.add(recipe)
+                }
+                recipeAdapter.notifyDataSetChanged()
             }
-
-            val params = FlexboxLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(8, 4, 8, 4)
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error loading recipes", e)
+                Toast.makeText(requireContext(), "Error cargando recetas", Toast.LENGTH_SHORT).show()
             }
-
-            flexbox.addView(categoryTextView, params)
-        }
     }
 
     companion object {
