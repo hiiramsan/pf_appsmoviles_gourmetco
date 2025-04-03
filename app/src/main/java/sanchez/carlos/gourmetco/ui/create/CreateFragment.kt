@@ -34,6 +34,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import sanchez.carlos.gourmetco.MainActivity
 import sanchez.carlos.gourmetco.R
+import kotlin.random.Random
 
 class CreateFragment : Fragment() {
 
@@ -156,6 +157,7 @@ class CreateFragment : Fragment() {
         updateSelectedCategories()
     }
 
+    // funcion para mostrar las categorias seleccionadas
     private fun updateAvailableCategories() {
         flexboxAvailableCategories.removeAllViews()
 
@@ -163,7 +165,6 @@ class CreateFragment : Fragment() {
             val view = layoutInflater.inflate(R.layout.item_not_selected_category, null).apply {
                 findViewById<TextView>(R.id.tv_category).text = category
 
-                // Configuración de layout params consistente
                 layoutParams = FlexboxLayout.LayoutParams(
                     FlexboxLayout.LayoutParams.WRAP_CONTENT,
                     resources.getDimensionPixelSize(R.dimen.category_button_height)
@@ -179,7 +180,6 @@ class CreateFragment : Fragment() {
                 }
             }
 
-            // Aplicar el tint gris programáticamente
             view.backgroundTintList = resources.getColorStateList(R.color.light_gray)
             flexboxAvailableCategories.addView(view)
         }
@@ -192,7 +192,6 @@ class CreateFragment : Fragment() {
             val view = layoutInflater.inflate(R.layout.item_selected_category, null).apply {
                 findViewById<TextView>(R.id.tv_category).text = category
 
-                // Asignar el clic a todo el layout
                 setOnClickListener {
                     categoriasSeleccionadas.remove(category)
                     updateAvailableCategories()
@@ -208,8 +207,6 @@ class CreateFragment : Fragment() {
             }
             flexboxSelectedCategories.addView(view)
         }
-
-        // Verificación de depuración
         Log.d("CreateFragment", "Categorías seleccionadas: $categoriasSeleccionadas")
     }
 
@@ -281,7 +278,7 @@ class CreateFragment : Fragment() {
         }
 
         db.collection("users").document(currentUser.uid).get().addOnSuccessListener { document ->
-            val userName = document?.getString("name") ?: "Usuario Anónimo"
+            val userName = document?.getString("name") ?: "Usuario"
             val userEmail = document?.getString("email") ?: currentUser.email ?: ""
 
             val recipe = hashMapOf(
@@ -297,8 +294,8 @@ class CreateFragment : Fragment() {
                 "categories" to categoriasSeleccionadas,
                 "ingredients" to ingredientes.map { it.toMap() },
                 "createdAt" to System.currentTimeMillis(),
-                "calories" to "0",
-                "time" to "0 min"
+                "calories" to getRandomCalories(),
+                "time" to getRandomMinutes()
             )
 
             db.collection("recipes").add(recipe).addOnSuccessListener {
@@ -320,6 +317,14 @@ class CreateFragment : Fragment() {
                 requireContext(), "Error al obtener datos del usuario", Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    fun getRandomCalories(): Long {
+        return Random.nextLong(100, 800)
+    }
+
+    fun getRandomMinutes(): Long {
+        return Random.nextLong(5, 120)
     }
 
     private fun cargarIngredients() {
