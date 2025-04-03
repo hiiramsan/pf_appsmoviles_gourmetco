@@ -5,13 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
-import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import sanchez.carlos.gourmetco.MainActivity
@@ -35,9 +31,9 @@ class SignUpActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        db.firestoreSettings = FirebaseFirestoreSettings.Builder()
-            .setPersistenceEnabled(true) // Habilita caché
-            .build()
+        db.firestoreSettings =
+            FirebaseFirestoreSettings.Builder().setPersistenceEnabled(true) // Habilita caché
+                .build()
 
         // Inicializar componentes
         name = findViewById(R.id.et_fullName)
@@ -68,41 +64,36 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         // Registrar usuario en Firebase Authentication
-        auth.createUserWithEmailAndPassword(emailText, passwordText)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    user?.let {
-                        saveUserToFirestore(it.uid, fullNameText, emailText)
-                    }
+        auth.createUserWithEmailAndPassword(emailText, passwordText).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val user = auth.currentUser
+                if (user != null) {
+                    Log.d("AUTH_DEBUG", "Usuario creado en Auth - UID: ${user.uid}")
+                    saveUserToFirestore(user.uid, fullNameText, emailText)
                 } else {
-                    Log.w("ERROR", "Error en el registro", task.exception)
-                    Toast.makeText(this, "Error en el registro: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("AUTH_ERROR", "Usuario Auth es null")
                 }
             }
+        }
     }
 
     private fun saveUserToFirestore(uid: String, fullName: String, email: String) {
         val user = hashMapOf(
-            "id" to uid,
-            "name" to fullName,
-
-            "email" to email
+            "id" to uid, "name" to fullName, "email" to email
         )
 
         Log.d("DEBUG", "Intentando guardar usuario en Firestore: $user")
 
-        db.collection("users").document(uid)
-            .set(user)
-            .addOnSuccessListener {
-                Log.d("SUCCESS", "Usuario guardado en Firestore con ID: $uid")
-                Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
-                goToMain()
-            }
-            .addOnFailureListener { e ->
-                Log.e("ERROR", "Error al guardar usuario en Firestore", e)
-                Toast.makeText(this, "Error al guardar en Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+        db.collection("users").document(uid).set(user).addOnSuccessListener {
+            Log.d("SUCCESS", "Usuario guardado en Firestore con ID: $uid")
+            Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
+            goToMain()
+        }.addOnFailureListener { e ->
+            Log.e("ERROR", "Error al guardar usuario en Firestore", e)
+            Toast.makeText(
+                this, "Error al guardar en Firestore: ${e.message}", Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun goToMain() {

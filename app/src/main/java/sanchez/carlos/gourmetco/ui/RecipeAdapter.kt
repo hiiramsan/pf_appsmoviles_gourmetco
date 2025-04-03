@@ -36,9 +36,9 @@ class RecipeAdapter(private val context: Context, private val recipes: List<Reci
         addCategories(flexbox, recipe.categories, context)
 
         title.text = recipe.title
-        calories.text = "${recipe.calories} cal"
-        time.text = recipe.time
-        author.text = "Shared by ${recipe.author}"
+        calories.text = "${recipe.calories.toString()} cal"
+        time.text = "${recipe.time.toString()} min"
+        author.text = " ${recipe.author}"
 
         // Cargar imagen con GLide
         Glide.with(context)
