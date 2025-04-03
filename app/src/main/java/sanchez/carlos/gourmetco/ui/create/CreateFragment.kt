@@ -171,27 +171,28 @@ class CreateFragment : Fragment() {
         flexboxAvailableCategories.removeAllViews()
 
         categorias.filter { !categoriasSeleccionadas.contains(it) }.forEach { category ->
-            val button = Button(requireContext()).apply {
-                text = category
-                setTextColor(resources.getColor(R.color.dark))
-                setBackgroundResource(R.drawable.rounded_category)
-                backgroundTintList = resources.getColorStateList(R.color.light_gray)
-                textSize = 10f
-                setPadding(10, 0, 10, 0)
+            val view = layoutInflater.inflate(R.layout.item_not_selected_category, null).apply {
+                findViewById<TextView>(R.id.tv_category).text = category
+
+                // Configuración de layout params consistente
                 layoutParams = FlexboxLayout.LayoutParams(
                     FlexboxLayout.LayoutParams.WRAP_CONTENT,
                     resources.getDimensionPixelSize(R.dimen.category_button_height)
                 ).apply {
                     setMargins(5, 0, 5, 10)
-                    flexGrow = 1f // Esta línea hace que los items se expandan
+                    flexGrow = 0f
                 }
+
                 setOnClickListener {
                     categoriasSeleccionadas.add(category)
                     updateAvailableCategories()
                     updateSelectedCategories()
                 }
             }
-            flexboxAvailableCategories.addView(button)
+
+            // Aplicar el tint gris programáticamente
+            view.backgroundTintList = resources.getColorStateList(R.color.light_gray)
+            flexboxAvailableCategories.addView(view)
         }
     }
 
@@ -200,13 +201,15 @@ class CreateFragment : Fragment() {
 
         categoriasSeleccionadas.forEach { category ->
             val view = layoutInflater.inflate(R.layout.item_selected_category, null).apply {
-                findViewById<Button>(R.id.btn_category).text = category
-                // Asignar el listener al ImageButton directamente
-                findViewById<ImageButton>(R.id.btn_remove_category).setOnClickListener {
+                findViewById<TextView>(R.id.tv_category).text = category
+
+                // Asignar el clic a todo el layout
+                setOnClickListener {
                     categoriasSeleccionadas.remove(category)
                     updateAvailableCategories()
                     updateSelectedCategories()
                 }
+
                 layoutParams = FlexboxLayout.LayoutParams(
                     FlexboxLayout.LayoutParams.WRAP_CONTENT,
                     resources.getDimensionPixelSize(R.dimen.category_button_height)
