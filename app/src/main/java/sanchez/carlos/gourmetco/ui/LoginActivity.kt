@@ -78,25 +78,29 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkUserInFirestore(uid: String) {
-        db.collection("gourmetco").document("users").get()
+        db.collection("users").document(uid).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    val fullName = document.getString("fullName") ?: "Usuario"
+                    val name = document.getString("name") ?: "Usuario"
                     val email = document.getString("email") ?: "Desconocido"
 
-                    Log.d("INFO", "Usuario encontrado: $fullName, $email")
-
-                    //Toast.makeText(this, "Bienvenido $fullName", Toast.LENGTH_SHORT).show()
+                    Log.d("INFO", "Usuario encontrado: $name, $email")
+                    Toast.makeText(this, "Bienvenido $name", Toast.LENGTH_SHORT).show()
                     goToMain()
                 } else {
                     Log.w("ERROR", "Usuario no encontrado en Firestore")
-                    Toast.makeText(this, "Error: Usuario no registrado en Firestore", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Error: Usuario no registrado correctamente",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     auth.signOut()
                 }
             }
             .addOnFailureListener { e ->
                 Log.w("ERROR", "Error al consultar Firestore", e)
-                Toast.makeText(this, "Error al validar usuario", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error al validar usuario: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
     }
 
