@@ -1,6 +1,5 @@
 package sanchez.carlos.gourmetco.ui.home.tabs
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -24,9 +24,13 @@ class ExploreFragment : Fragment() {
     private lateinit var adapter: RecipeAdapter
     private val db: FirebaseFirestore = Firebase.firestore
     private var recipesList = mutableListOf<Recipe>()
+    private lateinit var auth: FirebaseAuth
+    private var currentUserId: String? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_explore, container, false)
     }
@@ -34,15 +38,15 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Inicializar ListView y Adapter
+        auth = FirebaseAuth.getInstance()
+        currentUserId = auth.currentUser?.uid
+
         listView = view.findViewById(R.id.lvRecipes)
-        adapter = RecipeAdapter(requireContext(), recipesList)
+        adapter = RecipeAdapter(requireContext(), recipesList, currentUserId)
         listView.adapter = adapter
 
-        // Cargar recetas públicas
         loadPublicRecipes()
 
-        // Configurar click listener para los items
         listView.setOnItemClickListener { _, _, position, _ ->
             val selectedRecipe = recipesList[position]
             navigateToRecipeDetail(selectedRecipe)
@@ -50,13 +54,15 @@ class ExploreFragment : Fragment() {
     }
 
     private fun loadPublicRecipes() {
-        db.collection("recipes").whereEqualTo("isShared", true).get()
+        db.collection("recipes")
+            .whereEqualTo("isShared", true)
+            .get()
             .addOnSuccessListener { documents ->
                 recipesList.clear()
                 for (document in documents) {
                     try {
                         val recipe = document.toObject(Recipe::class.java).apply {
-                            id = document.id  // Asignamos el ID del documento
+                            id = document.id
                         }
                         recipesList.add(recipe)
                     } catch (e: Exception) {
@@ -67,10 +73,13 @@ class ExploreFragment : Fragment() {
 
                 if (recipesList.isEmpty()) {
                     Toast.makeText(
-                        context, "No hay recetas públicas disponibles", Toast.LENGTH_SHORT
+                        context,
+                        "No hay recetas públicas disponibles",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
-            }.addOnFailureListener { exception ->
+            }
+            .addOnFailureListener { exception ->
                 Log.w("ExploreFragment", "Error al cargar recetas", exception)
                 Toast.makeText(
                     context,
@@ -81,10 +90,10 @@ class ExploreFragment : Fragment() {
     }
 
     private fun navigateToRecipeDetail(recipe: Recipe) {
-        // Pasar la receta completa al fragmento de detalles
         val bundle = bundleOf("recipe" to recipe)
         findNavController().navigate(
-            R.id.action_navigation_home_to_detallesRecetaFragment, bundle
+            R.id.action_navigation_home_to_detallesRecetaFragment,
+            bundle
         )
     }
 
