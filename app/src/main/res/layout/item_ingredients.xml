@@ -34,7 +34,7 @@
             android:textSize="10sp"
             android:layout_gravity="center"
             android:layout_marginEnd="15dp"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
 
     <Spinner
             android:id="@+id/spIngredientUnit"

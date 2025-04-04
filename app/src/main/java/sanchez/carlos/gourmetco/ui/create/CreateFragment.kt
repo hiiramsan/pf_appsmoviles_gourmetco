@@ -61,7 +61,6 @@ class CreateFragment : Fragment() {
     private lateinit var checkBoxShare: CheckBox
 
     val REQUEST_IMAGE_GET = 1
-    val CLOUD_NAME = "dvznvnzam"
     val UPLOAD_PRESET = "recipes-preset"
     var imageUri: Uri? = null
 
