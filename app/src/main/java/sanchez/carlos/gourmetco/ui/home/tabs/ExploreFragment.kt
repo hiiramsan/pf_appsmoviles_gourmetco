@@ -1,115 +1,94 @@
 package sanchez.carlos.gourmetco.ui.home.tabs
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
 import android.widget.ListView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.flexbox.FlexboxLayout
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.Recipe
 import sanchez.carlos.gourmetco.ui.RecipeAdapter
-import sanchez.carlos.gourmetco.ui.detallesreceta.DetallesReceta
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ExploreFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ExploreFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var listView: ListView
+    private lateinit var adapter: RecipeAdapter
+    private val db: FirebaseFirestore = Firebase.firestore
+    private var recipesList = mutableListOf<Recipe>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_explore, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Inicializar ListView y Adapter
+        listView = view.findViewById(R.id.lvRecipes)
+        adapter = RecipeAdapter(requireContext(), recipesList)
+        listView.adapter = adapter
 
-        val listView = view.findViewById<ListView>(R.id.lvRecipes)
-        //listView.adapter = RecipeAdapter(requireContext(), recipes)
+        // Cargar recetas públicas
+        loadPublicRecipes()
 
+        // Configurar click listener para los items
         listView.setOnItemClickListener { _, _, position, _ ->
-            findNavController().navigate(
-                R.id.action_navigation_home_to_detallesRecetaFragment,
-                bundleOf("recipeId" to 0)
-            )
-        }
-
-    }
-
-    // para cateogorias
-    fun addCategories(flexbox: FlexboxLayout, categories: List<String>, context: Context) {
-        flexbox.removeAllViews()
-
-        for (category in categories) {
-            val categoryTextView = TextView(context).apply {
-                text = category
-                setPadding(16, 8, 16, 8)
-                setTextColor(Color.WHITE)
-                textSize = 12f
-                background = ContextCompat.getDrawable(context, R.drawable.rounded_background_etiquetas)
-            }
-
-            val params = FlexboxLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(8, 4, 8, 4)
-            }
-
-            flexbox.addView(categoryTextView, params)
+            val selectedRecipe = recipesList[position]
+            navigateToRecipeDetail(selectedRecipe)
         }
     }
 
+    private fun loadPublicRecipes() {
+        db.collection("recipes").whereEqualTo("isShared", true).get()
+            .addOnSuccessListener { documents ->
+                recipesList.clear()
+                for (document in documents) {
+                    try {
+                        val recipe = document.toObject(Recipe::class.java).apply {
+                            id = document.id  // Asignamos el ID del documento
+                        }
+                        recipesList.add(recipe)
+                    } catch (e: Exception) {
+                        Log.e("ExploreFragment", "Error al convertir documento: ${document.id}", e)
+                    }
+                }
+                adapter.notifyDataSetChanged()
+
+                if (recipesList.isEmpty()) {
+                    Toast.makeText(
+                        context, "No hay recetas públicas disponibles", Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }.addOnFailureListener { exception ->
+                Log.w("ExploreFragment", "Error al cargar recetas", exception)
+                Toast.makeText(
+                    context,
+                    "Error al cargar recetas: ${exception.localizedMessage}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
+
+    private fun navigateToRecipeDetail(recipe: Recipe) {
+        // Pasar la receta completa al fragmento de detalles
+        val bundle = bundleOf("recipe" to recipe)
+        findNavController().navigate(
+            R.id.action_navigation_home_to_detallesRecetaFragment, bundle
+        )
+    }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ExploreFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ExploreFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = ExploreFragment()
     }
 }

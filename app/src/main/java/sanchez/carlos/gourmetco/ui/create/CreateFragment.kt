@@ -127,7 +127,8 @@ class CreateFragment : Fragment() {
 
     private fun setupButtons() {
         cancel.setOnClickListener {
-            requireActivity().finish()
+            val intent = Intent(requireActivity(), MainActivity::class.java)
+            startActivity(intent)
         }
 
         save.setOnClickListener {
@@ -362,8 +363,7 @@ class CreateFragment : Fragment() {
         override fun getItemCount(): Int = ingredients.size
 
         override fun onBindViewHolder(
-            holder: IngredientViewHolder,
-            @SuppressLint("RecyclerView") position: Int
+            holder: IngredientViewHolder, @SuppressLint("RecyclerView") position: Int
         ) {
             val ingredient =
                 ingredients.getOrNull(position) ?: return  // Protección contra posiciones inválidas

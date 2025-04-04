@@ -5,11 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
@@ -26,9 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -72,9 +67,7 @@ class HomeFragment : Fragment() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             val uid = currentUser.uid
-            db.collection("users").document(uid)
-                .get()
-                .addOnSuccessListener { document ->
+            db.collection("users").document(uid).get().addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
                         val userName = document.getString("name") ?: "User"
                         binding.tvGreeting.text = "Hi, $userName!"
@@ -82,8 +75,7 @@ class HomeFragment : Fragment() {
                         binding.tvGreeting.text = "Hi there!"
                         Log.d("HomeFragment", "No se encontraron datos del usuario")
                     }
-                }
-                .addOnFailureListener { e ->
+                }.addOnFailureListener { e ->
                     binding.tvGreeting.text = "Hi there!"
                     Log.e("HomeFragment", "Error al cargar datos del usuario", e)
                 }
