@@ -1,302 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background"
-    tools:context=".ui.detallesreceta.DetallesReceta">
-
-    <!-- TODO: Update blank fragment layout -->
-
-
-    <ImageView
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="215dp"
-            android:layout_marginBottom="492dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/spinachsalad"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="-12dp" />
-
-
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="350dp"
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/rounded_background_likes"
-        android:drawableStart="@drawable/ic_bookmark"
-        android:drawablePadding="4dp"
-        android:padding="6dp"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.956"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.014"
-        tools:ignore="MissingConstraints" />
-
-
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        tools:context=".ui.detallesreceta.DetallesReceta">
 
     <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="827dp"
-            android:layout_marginTop="220dp"
+            android:layout_height="match_parent"
             android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp">
 
-            <TextView
+            <ImageView
+                    android:id="@+id/ivRecipeImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="215dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                    android:id="@+id/ivBookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:paddingRight="8dp"
-                    android:text="Spinach Salad"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_bookmark"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#BFB48F"
+                    app:layout_constraintTop_toBottomOf="@id/ivRecipeImage" />
+
+            <TextView
+                    android:text="Titulo"
+                    android:id="@+id/tvRecipeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:textColor="#252627"
                     android:textSize="28sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.116"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.005"
-                    tools:ignore="MissingConstraints" />
-
+                    app:layout_constraintTop_toBottomOf="@id/divider" />
 
             <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/tvAuthorLabel"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="Shared by "
                     android:textColor="@android:color/darker_gray"
                     android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.557"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.022"
-                    tools:ignore="MissingConstraints" />
+                    app:layout_constraintTop_toBottomOf="@id/tvRecipeTitle" />
 
             <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/tvAuthorName"
                     android:layout_width="wrap_content"
-                    android:layout_height="16dp"
-                    android:text="Carlos Hiram"
+                    android:layout_height="wrap_content"
                     android:textColor="#564E58"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.9"
+                    app:layout_constraintBottom_toBottomOf="@id/tvAuthorLabel"
+                    app:layout_constraintStart_toEndOf="@id/tvAuthorLabel"
+                    app:layout_constraintTop_toTopOf="@id/tvAuthorLabel" />
+
+            <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/flexTags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    app:alignItems="center"
+                    app:flexWrap="wrap"
+                    app:justifyContent="flex_start"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.022" />
+                    app:layout_constraintTop_toBottomOf="@id/tvAuthorLabel" />
 
             <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="50dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="5dp"
-                    android:background="@drawable/rounded_background_etiquetas"
-                    android:padding="6dp"
-                    android:text="Fast"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.302"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.065"
-                    tools:ignore="MissingConstraints" />
-
-            <TextView
-                    android:id="@+id/textViewBreakfast"
-                    android:layout_width="75dp"
-                    android:layout_height="28dp"
-                    android:layout_marginStart="5dp"
-                    android:background="@drawable/rounded_background_etiquetas"
-                    android:padding="6dp"
-                    android:text="Lunch"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.08"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.065"
-                    tools:ignore="MissingConstraints" />
-
-
-            <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="66dp"
-                    android:layout_height="28dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="180dp"
+                    android:id="@+id/tvLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
                     android:background="@drawable/rounded_background_etiquetas"
                     android:drawableStart="@drawable/love_vector"
-                    android:drawablePadding="4dp"
-                    android:padding="6dp"
-                    android:text="13"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="0"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.815"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.065"
-                    tools:ignore="MissingConstraints" />
+                    app:layout_constraintTop_toTopOf="@id/flexTags" />
 
             <TextView
-                    android:layout_width="354dp"
-                    android:layout_height="63dp"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                    android:text="Texto"
+                    android:id="@+id/tvDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias="0.124"
-                    android:id="@+id/textView5"
-                    app:layout_constraintHorizontal_bias="0.543" />
+                    app:layout_constraintTop_toBottomOf="@id/flexTags" />
 
             <TextView
+                    android:id="@+id/tvIngredientsTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
                     android:text="Ingredients"
                     android:textColor="@color/black"
                     android:textSize="17sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintHorizontal_bias="0.161"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias="0.242"
-                    android:id="@+id/textView10" />
+                    app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
             <ListView
                     android:id="@+id/listView_ingredientes"
-                    android:layout_width="337dp"
-                    android:layout_height="130dp"
-                    tools:ignore="MissingConstraints"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:divider="@null"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.513"
-                    app:layout_constraintVertical_bias="0.33" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvIngredientsTitle" />
 
             <TextView
-                    android:layout_width="124dp"
-                    android:layout_height="29dp"
+                    android:id="@+id/tvPreparationTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
                     android:text="Preparation"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:id="@+id/textView8"
-                    tools:ignore="MissingConstraints"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.173"
-                    app:layout_constraintVertical_bias="0.488" />
+                    app:layout_constraintTop_toBottomOf="@id/listView_ingredientes" />
 
             <TextView
+                    android:id="@+id/tvStepsTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
                     android:text="Steps:"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:id="@+id/textView9"
-                    tools:ignore="MissingConstraints"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintHorizontal_bias="0.169"
-                    app:layout_constraintVertical_bias="0.527" />
+                    app:layout_constraintTop_toBottomOf="@id/tvPreparationTitle" />
 
             <TextView
-                    android:layout_width="297dp"
-                    android:layout_height="127dp"
-                    android:text="1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.
-Magna aliqua.\n2. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-Consequat. \n3. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-"
+                    android:id="@+id/tvStepsContent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:id="@+id/Pasos"
-                    tools:ignore="MissingConstraints"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintVertical_bias="0.655"
-                    app:layout_constraintHorizontal_bias="0.552" />
+                    app:layout_constraintTop_toBottomOf="@id/tvStepsTitle" />
 
             <TextView
-                    android:layout_width="68dp"
+                    android:id="@+id/tvSourceLabel"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
                     android:text="Source:"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.151"
-                    app:layout_constraintVertical_bias="0.745"
-                    android:id="@+id/textView7" />
+                    app:layout_constraintTop_toBottomOf="@id/tvStepsContent" />
 
             <TextView
-                    android:layout_width="300dp"
+                    android:id="@+id/tvSourceLink"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="https://www.cocinafacil.com.mx/recetas"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
                     android:textColor="#336AD3"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/tvSourceLabel"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.927"
-                    app:layout_constraintVertical_bias="0.745" />
+                    app:layout_constraintStart_toEndOf="@id/tvSourceLabel"
+                    app:layout_constraintTop_toTopOf="@id/tvSourceLabel" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </ScrollView>
-
-    <TextView
-            android:layout_marginTop="210dp"
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            android:background="#BFB48F"
-            tools:ignore="MissingConstraints" />
-
-
 </FrameLayout>

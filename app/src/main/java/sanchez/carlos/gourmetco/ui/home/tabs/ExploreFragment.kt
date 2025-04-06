@@ -26,6 +26,7 @@ class ExploreFragment : Fragment() {
     private var recipesList = mutableListOf<Recipe>()
     private lateinit var auth: FirebaseAuth
     private var currentUserId: String? = null
+    private var isDataLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +34,12 @@ class ExploreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_explore, container, false)
+    }
+
+    // Recargar datos cuando el fragmento vuelva a ser visible
+    override fun onResume() {
+        super.onResume()
+        loadPublicRecipes()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +52,10 @@ class ExploreFragment : Fragment() {
         adapter = RecipeAdapter(requireContext(), recipesList, currentUserId)
         listView.adapter = adapter
 
-        loadPublicRecipes()
+        if (!isDataLoaded) {
+            loadPublicRecipes()
+            isDataLoaded = true
+        }
 
         listView.setOnItemClickListener { _, _, position, _ ->
             val selectedRecipe = recipesList[position]
@@ -90,7 +100,7 @@ class ExploreFragment : Fragment() {
     }
 
     private fun navigateToRecipeDetail(recipe: Recipe) {
-        val bundle = bundleOf("recipe" to recipe)
+        val bundle = bundleOf("recipeId" to recipe.id) // Cambia esto para pasar solo el ID
         findNavController().navigate(
             R.id.action_navigation_home_to_detallesRecetaFragment,
             bundle
