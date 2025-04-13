@@ -49,7 +49,6 @@ class MyRecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val listView = view.findViewById<ListView>(R.id.lvRecipes)
         recipeAdapter = RecipeAdapter(requireContext(), recipes)
         listView.adapter = recipeAdapter
