@@ -5,8 +5,8 @@
 - Cristi
 
 ### Funcionalidades faltantes:
-- Explore funcionando: aparecen las recetas publicas
-- Ver Detalles Receta funcional: por cada receta abrir la pantalla de la receta
+- Explore funcionando: aparecen las recetas publicas ✅
+- Ver Detalles Receta funcional: por cada receta abrir la pantalla de la recetaz
 - Bookmarkear una receta: se guarda como favoritas en tu user
 - Barra de busqueda funcional: buscar recetas por nombre
 - Filtros funcional: aplicar filtros
