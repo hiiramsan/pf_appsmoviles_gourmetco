@@ -50,7 +50,7 @@ class MyRecipesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val listView = view.findViewById<ListView>(R.id.lvRecipes)
-        recipeAdapter = RecipeAdapter(requireContext(), recipes)
+        recipeAdapter = RecipeAdapter(requireContext(), recipes, auth.currentUser?.uid)
         listView.adapter = recipeAdapter
         loadUserRecipes()
     }

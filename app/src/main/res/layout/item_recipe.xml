@@ -78,7 +78,7 @@
                 android:text="Spinach Salad"
                 android:textColor="#252627"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         <com.google.android.flexbox.FlexboxLayout
                 android:id="@+id/flexCategories"
@@ -87,7 +87,7 @@
                 android:layout_marginStart="8dp"
                 app:flexWrap="wrap"
                 app:alignItems="center"
-                app:justifyContent="flex_start"/>
+                app:justifyContent="flex_start" />
     </LinearLayout>
 
     <LinearLayout
