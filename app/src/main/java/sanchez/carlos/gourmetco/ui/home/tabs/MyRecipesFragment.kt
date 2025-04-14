@@ -12,10 +12,14 @@ import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.google.android.flexbox.FlexboxLayout
+import com.google.firebase.firestore.Query
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.Recipe
 import sanchez.carlos.gourmetco.ui.RecipeAdapter
@@ -33,66 +37,91 @@ private const val ARG_PARAM2 = "param2"
 class MyRecipesFragment : Fragment() {
 
     private lateinit var listView: ListView
-    private lateinit var recipeAdapter: RecipeAdapter
-    private var recipes = mutableListOf<Recipe>()
-    private val db = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
+    private lateinit var adapter: RecipeAdapter
+    private val db: FirebaseFirestore = Firebase.firestore
+    private var recipesList = mutableListOf<Recipe>()
+    private lateinit var auth: FirebaseAuth
+    private var currentUserId: String? = null
+    private var isDataLoaded = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_recipes, container, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadUserRecipes()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val listView = view.findViewById<ListView>(R.id.lvRecipes)
-        recipeAdapter = RecipeAdapter(requireContext(), recipes, auth.currentUser?.uid)
-        listView.adapter = recipeAdapter
-        loadUserRecipes()
+        auth = FirebaseAuth.getInstance()
+        currentUserId = auth.currentUser?.uid
+
+        listView = view.findViewById(R.id.lvRecipes)
+        adapter = RecipeAdapter(requireContext(), recipesList, currentUserId)
+        listView.adapter = adapter
+
+        if (!isDataLoaded) {
+            loadUserRecipes()
+            isDataLoaded = true
+        }
+
+        listView.setOnItemClickListener { _, _, position, _ ->
+            val selectedRecipe = recipesList[position]
+            navigateToRecipeDetail(selectedRecipe)
+        }
     }
 
     private fun loadUserRecipes() {
-        val userId = auth.currentUser?.uid ?: return
+        currentUserId ?: return // Return if user is not logged in
 
         db.collection("recipes")
-            .whereEqualTo("userId", userId)
+            .whereEqualTo("userId", currentUserId)
             .orderBy("createdAt", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->
-                recipes.clear()
+                recipesList.clear()
                 for (document in documents) {
-                    val recipe = document.toObject(Recipe::class.java)
-                    recipes.add(recipe)
+                    try {
+                        val recipe = document.toObject(Recipe::class.java).apply {
+                            id = document.id
+                        }
+                        recipesList.add(recipe)
+                    } catch (e: Exception) {
+                        Log.e("MyRecipesFragment", "Error converting document: ${document.id}", e)
+                    }
                 }
-                recipeAdapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
+
+                if (recipesList.isEmpty()) {
+                    Toast.makeText(
+                        context,
+                        "No tienes recetas guardadas",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
-            .addOnFailureListener { e ->
-                Log.e("Firestore", "Error loading recipes", e)
-                Toast.makeText(requireContext(), "Error cargando recetas", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { exception ->
+                Log.w("MyRecipesFragment", "Error loading recipes", exception)
+                Toast.makeText(
+                    context,
+                    "Error al cargar recetas: ${exception.localizedMessage}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyRecipesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyRecipesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun navigateToRecipeDetail(recipe: Recipe) {
+        val bundle = bundleOf("recipeId" to recipe.id)
+        findNavController().navigate(
+            R.id.action_navigation_home_to_detallesRecetaFragment,
+            bundle
+        )
     }
 }
