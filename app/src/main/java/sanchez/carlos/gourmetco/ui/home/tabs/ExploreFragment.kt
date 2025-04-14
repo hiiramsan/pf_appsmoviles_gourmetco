@@ -1,113 +1,74 @@
 package sanchez.carlos.gourmetco.ui.home.tabs
 
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.flexbox.FlexboxLayout
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.Query
 import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.Recipe
 import sanchez.carlos.gourmetco.ui.RecipeAdapter
+import sanchez.carlos.gourmetco.ui.detallesreceta.DetallesReceta
+
 
 class ExploreFragment : Fragment() {
 
     private lateinit var listView: ListView
-    private lateinit var adapter: RecipeAdapter
-    private val db: FirebaseFirestore = Firebase.firestore
-    private var recipesList = mutableListOf<Recipe>()
-    private lateinit var auth: FirebaseAuth
-    private var currentUserId: String? = null
-    private var isDataLoaded = false
+    private lateinit var recipeAdapter: RecipeAdapter
+    private var recipes = mutableListOf<Recipe>()
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_explore, container, false)
-    }
-
-    // Recargar datos cuando el fragmento vuelva a ser visible
-    override fun onResume() {
-        super.onResume()
-        loadPublicRecipes()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        auth = FirebaseAuth.getInstance()
-        currentUserId = auth.currentUser?.uid
-
         listView = view.findViewById(R.id.lvRecipes)
-        adapter = RecipeAdapter(requireContext(), recipesList, currentUserId)
-        listView.adapter = adapter
+        recipeAdapter = RecipeAdapter(requireContext(), recipes)
+        listView.adapter = recipeAdapter
+        loadSharedRecipes()
 
-        if (!isDataLoaded) {
-            loadPublicRecipes()
-            isDataLoaded = true
-        }
-
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val selectedRecipe = recipesList[position]
-            navigateToRecipeDetail(selectedRecipe)
-        }
     }
 
-    private fun loadPublicRecipes() {
+    private fun loadSharedRecipes() {
         db.collection("recipes")
             .whereEqualTo("isShared", true)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->
-                recipesList.clear()
+                recipes.clear()
                 for (document in documents) {
-                    try {
-                        val recipe = document.toObject(Recipe::class.java).apply {
-                            id = document.id
-                        }
-                        recipesList.add(recipe)
-                    } catch (e: Exception) {
-                        Log.e("ExploreFragment", "Error al convertir documento: ${document.id}", e)
-                    }
+                    val recipe = document.toObject(Recipe::class.java)
+                    recipes.add(recipe)
                 }
-                adapter.notifyDataSetChanged()
-
-                if (recipesList.isEmpty()) {
-                    Toast.makeText(
-                        context,
-                        "No hay recetas públicas disponibles",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                recipeAdapter.notifyDataSetChanged()
             }
-            .addOnFailureListener { exception ->
-                Log.w("ExploreFragment", "Error al cargar recetas", exception)
-                Toast.makeText(
-                    context,
-                    "Error al cargar recetas: ${exception.localizedMessage}",
-                    Toast.LENGTH_LONG
-                ).show()
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error cargando recetas COMPARTIDAS", e)
+                Toast.makeText(requireContext(), "Error cargando recetas COMPRATIDAS", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private fun navigateToRecipeDetail(recipe: Recipe) {
-        val bundle = bundleOf("recipeId" to recipe.id) // Cambia esto para pasar solo el ID
-        findNavController().navigate(
-            R.id.action_navigation_home_to_detallesRecetaFragment,
-            bundle
-        )
-    }
 
-    companion object {
-        fun newInstance() = ExploreFragment()
-    }
 }
