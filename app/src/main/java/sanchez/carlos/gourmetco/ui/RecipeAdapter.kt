@@ -50,7 +50,7 @@ class RecipeAdapter(
 
         // Verificar si el usuario actual ya dio like
         val isLiked = currentUserId in recipe.savedBy
-        val drawableRes = if (isLiked) R.drawable.love_vector_filled else R.drawable.love_vector
+        val drawableRes = if (isLiked) R.drawable.bookmarkcheck else R.drawable.bookmark
         tvLikes.setCompoundDrawablesWithIntrinsicBounds(drawableRes, 0, 0, 0)
 
         // Configurar listener para likes

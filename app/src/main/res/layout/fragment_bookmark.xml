@@ -36,6 +36,14 @@
         android:textColor="#333333"
         android:textSize="16sp" />
 
+    <TextView
+            android:id="@+id/tvEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="No bookmarked recipes yet"
+            android:visibility="gone"/>
+
     <ListView
             android:id="@+id/lvRecipes"
             android:layout_width="match_parent"

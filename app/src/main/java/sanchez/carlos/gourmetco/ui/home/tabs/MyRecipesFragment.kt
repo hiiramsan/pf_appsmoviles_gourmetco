@@ -79,7 +79,7 @@ class MyRecipesFragment : Fragment() {
     }
 
     private fun loadUserRecipes() {
-        currentUserId ?: return // Return if user is not logged in
+        currentUserId ?: return
 
         db.collection("recipes")
             .whereEqualTo("userId", currentUserId)

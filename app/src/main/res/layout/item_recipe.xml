@@ -55,7 +55,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_margin="12dp"
                     android:background="@drawable/rounded_background_likes"
-                    android:drawableStart="@drawable/love_vector"
+                    android:drawableStart="@drawable/bookmark"
                     android:drawablePadding="4dp"
                     android:padding="6dp"
                     android:text="13"
