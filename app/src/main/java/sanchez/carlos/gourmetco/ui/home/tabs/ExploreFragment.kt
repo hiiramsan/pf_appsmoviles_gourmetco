@@ -24,6 +24,7 @@ class ExploreFragment : Fragment() {
     private lateinit var adapter: RecipeAdapter
     private val db: FirebaseFirestore = Firebase.firestore
     private var recipesList = mutableListOf<Recipe>()
+    private var allRecipes = mutableListOf<Recipe>() // Lista completa para filtrar
     private lateinit var auth: FirebaseAuth
     private var currentUserId: String? = null
     private var isDataLoaded = false
@@ -68,12 +69,14 @@ class ExploreFragment : Fragment() {
             .get()
             .addOnSuccessListener { documents ->
                 recipesList.clear()
+                allRecipes.clear() // Limpiar la lista completa
                 for (document in documents) {
                     try {
                         val recipe = document.toObject(Recipe::class.java).apply {
                             id = document.id
                         }
                         recipesList.add(recipe)
+                        allRecipes.add(recipe) // Guardar una copia en la lista completa
                     } catch (e: Exception) {
                         Log.e("ExploreFragment", "Error al convertir documento: ${document.id}", e)
                     }
@@ -96,6 +99,11 @@ class ExploreFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+    }
+
+    // Método para acceder a todas las recetas (usado para búsqueda)
+    fun getAllRecipes(): List<Recipe> {
+        return allRecipes
     }
 
     private fun navigateToRecipeDetail(recipe: Recipe) {

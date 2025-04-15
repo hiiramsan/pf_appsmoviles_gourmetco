@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -40,6 +41,7 @@ class MyRecipesFragment : Fragment() {
     private lateinit var adapter: RecipeAdapter
     private val db: FirebaseFirestore = Firebase.firestore
     private var recipesList = mutableListOf<Recipe>()
+    private var allRecipes = mutableListOf<Recipe>() // Lista completa para filtrar
     private lateinit var auth: FirebaseAuth
     private var currentUserId: String? = null
     private var isDataLoaded = false
@@ -87,12 +89,14 @@ class MyRecipesFragment : Fragment() {
             .get()
             .addOnSuccessListener { documents ->
                 recipesList.clear()
+                allRecipes.clear() // Limpiar la lista completa
                 for (document in documents) {
                     try {
                         val recipe = document.toObject(Recipe::class.java).apply {
                             id = document.id
                         }
                         recipesList.add(recipe)
+                        allRecipes.add(recipe) // Guardar una copia en la lista completa
                     } catch (e: Exception) {
                         Log.e("MyRecipesFragment", "Error converting document: ${document.id}", e)
                     }
@@ -115,6 +119,10 @@ class MyRecipesFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+    }
+
+    fun getAllRecipes(): List<Recipe> {
+        return allRecipes
     }
 
     private fun navigateToRecipeDetail(recipe: Recipe) {

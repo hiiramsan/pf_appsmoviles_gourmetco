@@ -1,17 +1,26 @@
 package sanchez.carlos.gourmetco.ui.home
 
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.databinding.FragmentHomeBinding
+import sanchez.carlos.gourmetco.ui.RecipeAdapter
 import sanchez.carlos.gourmetco.ui.home.tabs.ExploreFragment
 import sanchez.carlos.gourmetco.ui.home.tabs.MyRecipesFragment
 
@@ -21,6 +30,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -50,8 +60,8 @@ class HomeFragment : Fragment() {
         loadUserData()
 
         // Configurar el ViewPager2 con el adapter
-        val adapter = ViewPagerAdapter(requireActivity())
-        binding.viewPager.adapter = adapter
+        viewPagerAdapter = ViewPagerAdapter(requireActivity())
+        binding.viewPager.adapter = viewPagerAdapter
 
         // Conectar TabLayout con ViewPager2
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -61,6 +71,97 @@ class HomeFragment : Fragment() {
                 else -> ""
             }
         }.attach()
+
+        // Configurar el botón de búsqueda
+        setupSearchButton()
+    }
+
+    private fun setupSearchButton() {
+        // Configurar el botón de búsqueda (ivSearch)
+        binding.ivSearch.setOnClickListener {
+            val query = binding.etSearch.text.toString().trim()
+            performSearch(query)
+
+            // Ocultar el teclado después de buscar
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+        }
+
+        // También permitir búsqueda con la tecla "Enter" del teclado
+        binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
+                val query = binding.etSearch.text.toString().trim()
+                performSearch(query)
+
+                // Ocultar el teclado
+                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+    }
+
+    private fun performSearch(query: String) {
+        // Obtener el fragmento actual basado en la posición del ViewPager
+        val currentPosition = binding.viewPager.currentItem
+        val currentFragment = viewPagerAdapter.getFragment(currentPosition)
+
+        // Aplicar la búsqueda al fragmento actual
+        when (currentFragment) {
+            is ExploreFragment -> searchInExploreFragment(currentFragment, query)
+            is MyRecipesFragment -> searchInMyRecipesFragment(currentFragment, query)
+        }
+    }
+
+    private fun searchInExploreFragment(fragment: ExploreFragment, query: String) {
+        // Obtener la referencia a la ListView y al adaptador del ExploreFragment
+        val listView = fragment.view?.findViewById<ListView>(R.id.lvRecipes)
+        val adapter = listView?.adapter as? RecipeAdapter
+
+        if (adapter != null) {
+            // Filtrar las recetas por nombre
+            val allRecipes = fragment.getAllRecipes() ?: return
+
+            if (query.isEmpty()) {
+                // Si no hay consulta, mostrar todas las recetas
+                adapter.clear()
+                adapter.addAll(allRecipes)
+            } else {
+                // Filtrar por nombre
+                val filteredRecipes = allRecipes.filter { recipe ->
+                    recipe.title.contains(query, ignoreCase = true)
+                }
+                adapter.clear()
+                adapter.addAll(filteredRecipes)
+            }
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun searchInMyRecipesFragment(fragment: MyRecipesFragment, query: String) {
+        // Obtener la referencia a la ListView y al adaptador del MyRecipesFragment
+        val listView = fragment.view?.findViewById<ListView>(R.id.lvRecipes)
+        val adapter = listView?.adapter as? RecipeAdapter
+
+        if (adapter != null) {
+            // Filtrar las recetas por nombre
+            val allRecipes = fragment.getAllRecipes() ?: return
+
+            if (query.isEmpty()) {
+                // Si no hay consulta, mostrar todas las recetas
+                adapter.clear()
+                adapter.addAll(allRecipes)
+            } else {
+                // Filtrar por nombre
+                val filteredRecipes = allRecipes.filter { recipe ->
+                    recipe.title.contains(query, ignoreCase = true)
+                }
+                adapter.clear()
+                adapter.addAll(filteredRecipes)
+            }
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun loadUserData() {
@@ -68,19 +169,18 @@ class HomeFragment : Fragment() {
         if (currentUser != null) {
             val uid = currentUser.uid
             db.collection("users").document(uid).get().addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        val userName = document.getString("name") ?: "User"
-                        binding.tvGreeting.text = "Hi, $userName!"
-                    } else {
-                        binding.tvGreeting.text = "Hi there!"
-                        Log.d("HomeFragment", "No se encontraron datos del usuario")
-                    }
-                }.addOnFailureListener { e ->
+                if (document != null && document.exists()) {
+                    val userName = document.getString("name") ?: "User"
+                    binding.tvGreeting.text = "Hi, $userName!"
+                } else {
                     binding.tvGreeting.text = "Hi there!"
-                    Log.e("HomeFragment", "Error al cargar datos del usuario", e)
+                    Log.d("HomeFragment", "No se encontraron datos del usuario")
                 }
+            }.addOnFailureListener { e ->
+                binding.tvGreeting.text = "Hi there!"
+                Log.e("HomeFragment", "Error al cargar datos del usuario", e)
+            }
         } else {
-
             binding.tvGreeting.text = "Hi there!"
         }
     }
@@ -91,16 +191,25 @@ class HomeFragment : Fragment() {
     }
 }
 
+// Adaptador modificado para mantener referencias a los fragmentos
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
+
+    private val fragments = SparseArray<Fragment>()
 
     override fun getItemCount(): Int = 2
 
     override fun createFragment(position: Int): Fragment {
-        return when (position) {
+        val fragment = when (position) {
             0 -> ExploreFragment()
             1 -> MyRecipesFragment()
             else -> throw IllegalStateException("Invalid position")
         }
+        fragments.put(position, fragment)
+        return fragment
+    }
+
+    fun getFragment(position: Int): Fragment? {
+        return fragments[position]
     }
 }

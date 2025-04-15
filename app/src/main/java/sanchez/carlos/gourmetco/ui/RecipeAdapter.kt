@@ -73,6 +73,16 @@ class RecipeAdapter(
         return view
     }
 
+    fun clear() {
+        recipes.clear()
+        notifyDataSetChanged()
+    }
+
+    fun addAll(newRecipes: List<Recipe>) {
+        recipes.addAll(newRecipes)
+        notifyDataSetChanged()
+    }
+
     private fun toggleLike(recipe: Recipe, position: Int) {
         val recipeRef = db.collection("recipes").document(recipe.id)
 
@@ -157,4 +167,6 @@ fun addCategories(flexbox: FlexboxLayout, categories: List<String>, context: Con
 
         flexbox.addView(moreTextView, params)
     }
+
+
 }
