@@ -55,13 +55,18 @@ class TrendingFragment : Fragment() {
         loadTrendingRecipes()
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            val recipeId = recipesList[position].id
-            findNavController().navigate(
-                R.id.action_navigation_home_to_detallesRecetaFragment,
-                bundleOf("recipeId" to recipeId)
-            )
+            val selectedRecipe = recipesList[position]
+            navigateToRecipeDetail(selectedRecipe)
         }
+
     }
+
+    private fun navigateToRecipeDetail(recipe: Recipe) {
+        val bundle = bundleOf("recipeId" to recipe.id)
+        findNavController().navigate(R.id.action_trending_to_detallesRecetaFragment, bundle)
+
+    }
+
 
     private fun loadTrendingRecipes() {
         db.collection("recipes")

@@ -62,12 +62,18 @@ class BookmarkFragment : Fragment() {
         loadBookmarkedRecipes()
 
         listView.setOnItemClickListener { _, _, position, _ ->
-            findNavController().navigate(
-                R.id.action_navigation_home_to_detallesRecetaFragment,
-                bundleOf("recipeId" to 0)
-            )
+            val selectedRecipe = recipesList[position]
+            navigateToRecipeDetail(selectedRecipe)
         }
+
     }
+
+    private fun navigateToRecipeDetail(recipe: Recipe) {
+        val bundle = bundleOf("recipeId" to recipe.id)
+        findNavController().navigate(R.id.action_bookmark_to_detallesRecetaFragment, bundle)
+
+    }
+
 
     private fun loadBookmarkedRecipes() {
         currentUserId ?: return

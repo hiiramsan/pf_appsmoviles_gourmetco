@@ -20,13 +20,21 @@
         android:id="@+id/nav_trending"
         android:name="sanchez.carlos.gourmetco.ui.trending.TrendingFragment"
         android:label="Trending"
-        tools:layout="@layout/fragment_trending" />
+        tools:layout="@layout/fragment_trending">
+        <action
+            android:id="@+id/action_trending_to_detallesRecetaFragment"
+            app:destination="@id/fragment_detalles_receta" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_bookmark"
         android:name="sanchez.carlos.gourmetco.ui.bookmark.BookmarkFragment"
         android:label="Bookmark"
-        tools:layout="@layout/fragment_bookmark" />
+        tools:layout="@layout/fragment_bookmark">
+        <action
+            android:id="@+id/action_bookmark_to_detallesRecetaFragment"
+            app:destination="@id/fragment_detalles_receta" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_create"
