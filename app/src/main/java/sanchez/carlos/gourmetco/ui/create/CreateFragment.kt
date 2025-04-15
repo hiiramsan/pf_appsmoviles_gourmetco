@@ -239,7 +239,7 @@ class CreateFragment : Fragment() {
             return
         }
 
-        MediaManager.get().upload(imageUri).unsigned(UPLOAD_PRESET)
+        com.cloudinary.android.MediaManager.get().upload(imageUri).unsigned(UPLOAD_PRESET)
             .callback(object : UploadCallback {
                 override fun onStart(requestId: String) {}
 
