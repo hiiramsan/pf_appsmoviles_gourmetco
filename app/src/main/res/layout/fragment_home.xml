@@ -109,7 +109,7 @@
                 android:id="@+id/categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F5F5F5"
+                android:background="@color/background"
                 android:orientation="vertical"
                 android:layout_marginTop="10dp"
                 android:padding="0dp">

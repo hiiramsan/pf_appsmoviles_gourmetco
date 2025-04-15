@@ -42,6 +42,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupCategoryToggleListeners()
+
         // toggle visibility de las categorias con el btnFilter
         binding.categoriesContainer.visibility = View.GONE
 
@@ -189,6 +191,70 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun setupCategoryToggleListeners() {
+        val toggles = listOf(
+            binding.toggleBreakfast,
+            binding.toggleLunch,
+            binding.toggleDinner,
+            binding.toggleSnack,
+            binding.toggleEasy,
+            binding.toggleMedium,
+            binding.toggleVegan,
+            binding.toggleSpicy
+        )
+
+        for (toggle in toggles) {
+            toggle.setOnCheckedChangeListener { _, _ ->
+                applyCategoryFilters()
+            }
+        }
+    }
+
+    private fun applyCategoryFilters() {
+        val selectedCategories = mutableListOf<String>()
+
+        if (binding.toggleBreakfast.isChecked) selectedCategories.add("Breakfast")
+        if (binding.toggleLunch.isChecked) selectedCategories.add("Lunch")
+        if (binding.toggleDinner.isChecked) selectedCategories.add("Dinner")
+        if (binding.toggleSnack.isChecked) selectedCategories.add("Snack")
+        if (binding.toggleEasy.isChecked) selectedCategories.add("Easy")
+        if (binding.toggleMedium.isChecked) selectedCategories.add("Medium")
+        if (binding.toggleVegan.isChecked) selectedCategories.add("Vegan")
+        if (binding.toggleSpicy.isChecked) selectedCategories.add("Spicy")
+
+        val currentFragment = viewPagerAdapter.getFragment(binding.viewPager.currentItem)
+
+        when (currentFragment) {
+            is ExploreFragment -> filterRecipesInFragment(currentFragment, selectedCategories)
+            is MyRecipesFragment -> filterRecipesInFragment(currentFragment, selectedCategories)
+        }
+    }
+
+    private fun filterRecipesInFragment(fragment: Fragment, selectedCategories: List<String>) {
+        val listView = fragment.view?.findViewById<ListView>(R.id.lvRecipes)
+        val adapter = listView?.adapter as? RecipeAdapter
+
+        val allRecipes = when (fragment) {
+            is ExploreFragment -> fragment.getAllRecipes()
+            is MyRecipesFragment -> fragment.getAllRecipes()
+            else -> null
+        } ?: return
+
+        val filtered = if (selectedCategories.isEmpty()) {
+            allRecipes
+        } else {
+            allRecipes.filter { recipe ->
+                recipe.categories.any { it in selectedCategories }
+            }
+        }
+
+        adapter?.clear()
+        adapter?.addAll(filtered)
+        adapter?.notifyDataSetChanged()
+    }
+
+
 }
 
 // Adaptador modificado para mantener referencias a los fragmentos
