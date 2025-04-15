@@ -10,5 +10,5 @@
 - Bookmarkear una receta: se guarda como favoritas en tu user✅
 - Bookmark Section✅
 - Barra de busqueda funcional: buscar recetas por nombre✅
-- Filtros funcional: aplicar filtros
+- Filtros funcional: aplicar filtros✅
 - Trending: pantalla que funciona como un top de las recetas mas bookmarkeadas✅
