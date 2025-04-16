@@ -1,5 +1,6 @@
 package sanchez.carlos.gourmetco.ui.profile
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -10,22 +11,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.ui.LoginActivity
 
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import sanchez.carlos.gourmetco.MainActivity
+import sanchez.carlos.gourmetco.Recipe
+import sanchez.carlos.gourmetco.ui.ProfileRecipeAdapter
 
 class ProfileFragment : Fragment() {
 
-    private lateinit var back : ImageButton
-    private lateinit var btnLogOut : Button
-    private lateinit var tvUsername : TextView
-    private lateinit var tvMail : TextView
+    private lateinit var back: ImageButton
+    private lateinit var btnLogOut: Button
+    private lateinit var tvUsername: TextView
+    private lateinit var tvMail: TextView
+    private lateinit var lvRecipes: ListView
     private lateinit var db: FirebaseFirestore
+    private var recipesList = mutableListOf<Recipe>()
+    private var allRecipes = mutableListOf<Recipe>()
+    private lateinit var profileAdapter: ProfileRecipeAdapter
+    private var currentUserId: String? = null
 
     companion object {
         fun newInstance() = ProfileFragment()
@@ -35,8 +46,6 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
@@ -53,21 +62,37 @@ class ProfileFragment : Fragment() {
         btnLogOut = view.findViewById(R.id.btn_logOut)
         tvUsername = view.findViewById(R.id.tvUsername)
         tvMail = view.findViewById(R.id.tvMail)
+        lvRecipes = view.findViewById(R.id.lvRecipes)
 
         db = FirebaseFirestore.getInstance()
+
+        // Inicializar la lista de recetas y el adaptador
+        recipesList = mutableListOf()
+        val currentUserId = Firebase.auth.currentUser?.uid
+        profileAdapter = ProfileRecipeAdapter(
+            requireContext(),
+            recipesList,
+            currentUserId,
+            onEditClick = { recipe -> editRecipe(recipe) },
+            onDeleteClick = { recipe -> deleteRecipe(recipe) }
+        )
+        lvRecipes.adapter = profileAdapter
+
+        // Cargar datos
         loadUserData()
+        loadUserRecipes()
 
         back.setOnClickListener {
             val intent = Intent(requireContext(), MainActivity::class.java)
             startActivity(intent)
         }
 
-        btnLogOut.setOnClickListener({
+        btnLogOut.setOnClickListener {
             Firebase.auth.signOut()
             val intent = Intent(requireContext(), LoginActivity::class.java)
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-        })
+        }
     }
 
     private fun loadUserData() {
@@ -96,5 +121,65 @@ class ProfileFragment : Fragment() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
+    }
+
+    private fun loadUserRecipes() {
+        currentUserId = Firebase.auth.currentUser?.uid
+        val uid = currentUserId
+        if (uid.isNullOrEmpty()) return
+
+        db.collection("recipes")
+            .whereEqualTo("userId", uid)
+            .orderBy("createdAt", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { documents ->
+                recipesList.clear()
+                allRecipes.clear()
+                for (document in documents) {
+                    try {
+                        val recipe = document.toObject(Recipe::class.java).apply {
+                            id = document.id
+                        }
+                        recipesList.add(recipe)
+                        allRecipes.add(recipe)
+                    } catch (e: Exception) {
+                        Log.e("ProfileFragment", "Error converting document: ${document.id}", e)
+                    }
+                }
+                profileAdapter.notifyDataSetChanged()
+
+                if (recipesList.isEmpty()) {
+                    Toast.makeText(context, "No tienes recetas guardadas", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("ProfileFragment", "Error loading recipes", exception)
+                Toast.makeText(context, "Error al cargar recetas: ${exception.localizedMessage}", Toast.LENGTH_LONG).show()
+            }
+    }
+
+
+    private fun editRecipe(recipe: Recipe) {
+        // Implementar la lógica para editar la receta
+    }
+
+    private fun deleteRecipe(recipe: Recipe) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Eliminar receta")
+            .setMessage("¿Estás seguro que deseas eliminar esta receta?")
+            .setPositiveButton("Eliminar") { _, _ ->
+                db.collection("recipes").document(recipe.id)
+                    .delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Receta eliminada", Toast.LENGTH_SHORT).show()
+                        recipesList.remove(recipe)
+                        profileAdapter.notifyDataSetChanged()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Error al eliminar", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 }
