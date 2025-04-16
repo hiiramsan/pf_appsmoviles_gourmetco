@@ -28,28 +28,31 @@
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <LinearLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:paddingTop="4dp"
+            android:paddingBottom="8dp">
 
         <TextView
                 android:id="@+id/tvRecipeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Spinach Salad"
-                android:textColor="
-#252627"
+                android:textColor="#252627"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"/>
 
         <LinearLayout
-                android:orientation="horizontal"
+                android:id="@+id/buttonContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="180dp"
-                android:layout_marginTop="4dp">
+                android:orientation="horizontal"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true">
 
             <Button
                     android:id="@+id/btnEdit"
@@ -67,6 +70,7 @@
                     android:background="@drawable/rounded_background_etiquetas" />
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
+
 
 </LinearLayout>
