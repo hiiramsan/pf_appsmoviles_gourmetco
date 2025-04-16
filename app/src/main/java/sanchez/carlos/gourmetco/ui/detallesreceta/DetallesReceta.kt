@@ -23,10 +23,6 @@ import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.Recipe
 import sanchez.carlos.gourmetco.ui.create.Ingredient
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -49,6 +45,11 @@ class DetallesReceta : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detalles_receta, container, false)
+
+        val ivBack = view.findViewById<ImageView>(R.id.ivBack)
+        ivBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
 
         // Cargar los datos de la receta desde Firestore
         loadRecipeDetails(view)
@@ -127,15 +128,11 @@ class DetallesReceta : Fragment() {
         // Configurar bookmark (si está guardado por el usuario actual)
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
         val isSaved = currentUserId?.let { recipe.savedBy.contains(it) } ?: false
-        view.findViewById<ImageView>(R.id.ivBookmark).setImageResource(
-            if (isSaved) R.drawable.love_vector_filled else R.drawable.ic_bookmark
-        )
+
     }
 
-    // Función de extensión para convertir dp a px
-    private fun Int.dpToPx(context: Context): Int {
-        return (this * context.resources.displayMetrics.density).toInt()
-    }
+
+
 
     private fun formatSteps(steps: List<String>): String {
         return steps.mapIndexed { index, step ->
@@ -144,15 +141,9 @@ class DetallesReceta : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetallesReceta.
-         */
-        // TODO: Rename and change types and number of parameters
+        private const val ARG_PARAM1 = "param1"
+        private const val ARG_PARAM2 = "param2"
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) = DetallesReceta().apply {
             arguments = Bundle().apply {
@@ -160,7 +151,13 @@ class DetallesReceta : Fragment() {
                 putString(ARG_PARAM2, param2)
             }
         }
+
+        // Función de extensión para convertir dp a px
+        fun Int.dpToPx(context: Context): Int {
+            return (this * context.resources.displayMetrics.density).toInt()
+        }
     }
+
 
     private class AdaptadorProductos(
         private val context: Context, private val ingredients: List<Ingredient>
@@ -170,20 +167,24 @@ class DetallesReceta : Fragment() {
             val view = convertView ?: LayoutInflater.from(context)
                 .inflate(R.layout.ingredientes_view, parent, false)
 
-            val ingredient = getItem(position) as Ingredient
-
-            // Debug: Verifica los datos que llegan
-            Log.d(
-                "IngredientAdapter",
-                "Showing: ${ingredient.name} - ${ingredient.quantity} ${ingredient.unit}"
-            )
+            val ingredient = getItem(position)
 
             view.findViewById<TextView>(R.id.ing_nombre).text = ingredient.name
             view.findViewById<TextView>(R.id.ing_cantidad).text = ingredient.quantity
             view.findViewById<TextView>(R.id.ing_medida).text = ingredient.unit
 
+            // ✅ Aplica margen inferior dinámicamente (solo si no es el último item)
+            val layoutParams = ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            val marginBottom = if (position < count - 1) 10.dpToPx(context) else 0
+            layoutParams.setMargins(0, 0, 0, marginBottom)
+            view.layoutParams = layoutParams
+
             return view
         }
+
 
         override fun getCount(): Int = ingredients.size
         override fun getItem(position: Int): Ingredient = ingredients[position]

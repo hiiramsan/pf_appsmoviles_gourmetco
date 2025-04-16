@@ -3,6 +3,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingHorizontal="20dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 

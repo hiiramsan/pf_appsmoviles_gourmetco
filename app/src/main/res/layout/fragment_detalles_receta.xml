@@ -25,13 +25,17 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                    android:id="@+id/ivBookmark"
+                    android:id="@+id/ivBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="12dp"
-                    android:src="@drawable/ic_bookmark"
+                    android:src="@drawable/arrow_back"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    />
 
             <View
                     android:id="@+id/divider"
@@ -60,7 +64,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:text="Shared by "
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/darker_gray"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvRecipeTitle" />
@@ -161,7 +165,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:text="Steps:"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/darker_gray"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +178,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/gray"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -187,7 +191,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Source:"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/darker_gray"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"

@@ -17,4 +17,5 @@
     <color name="green_transparent">#C6E0C9</color>
     <color name="red_wine">#7F2529</color>
     <color name="placeholder">#999999</color>
+    <color name="darker_gray">#797875</color>
 </resources>
