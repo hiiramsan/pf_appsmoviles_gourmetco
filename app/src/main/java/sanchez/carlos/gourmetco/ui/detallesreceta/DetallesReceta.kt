@@ -89,7 +89,7 @@ class DetallesReceta : Fragment() {
         view.findViewById<TextView>(R.id.tvLikes).text = recipe.timesSaved.toString()
 
         // Configurar descripción (usando instructions)
-        view.findViewById<TextView>(R.id.tvDescription).text = recipe.instructions
+        view.findViewById<TextView>(R.id.tvDescription).text = recipe.description.toString()
 
         // Configurar ingredientes
         ingredientsList.clear()

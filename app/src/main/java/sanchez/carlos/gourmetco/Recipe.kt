@@ -5,6 +5,7 @@ import sanchez.carlos.gourmetco.ui.create.Ingredient
 data class Recipe(
     var id: String = "",
     val title: String = "",
+    val description: String = "",
     val image: String? = null,
     val timesSaved: Long = 0L,
     val savedBy: List<String> = emptyList(),
@@ -20,6 +21,7 @@ data class Recipe(
     val createdAt: Long = System.currentTimeMillis()
 ) {
     constructor() : this(
+        "",
         "",
         "",
         null,
