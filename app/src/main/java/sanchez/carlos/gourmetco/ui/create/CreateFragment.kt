@@ -69,6 +69,7 @@ class CreateFragment : Fragment() {
     // for editing...
     private var isEditing = false
     private var currentRecipeId: String? = null
+    private var currentPhoto: String? = null
     private lateinit var ingredientAdapter: IngredientAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -143,6 +144,7 @@ class CreateFragment : Fragment() {
 
                 // set phto
                 recipe.image?.let { uri ->
+                    currentPhoto = uri
                     Glide.with(requireContext()).load(uri).into(ivPreview)
                 }
 
