@@ -14,6 +14,7 @@ import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import sanchez.carlos.gourmetco.R
 import sanchez.carlos.gourmetco.ui.LoginActivity
 
@@ -161,6 +162,17 @@ class ProfileFragment : Fragment() {
 
     private fun editRecipe(recipe: Recipe) {
         // Implementar la lógica para editar la receta
+
+        val args = Bundle().apply {
+            putString("RECIPE_ID", recipe.id)
+            putBoolean("IS_EDIT", true)
+        }
+
+        // 2. Navigate to CreateRecipeFragment with arguments
+        findNavController().navigate(
+            R.id.action_profileFragment_to_createFragment,
+            args
+        )
     }
 
     private fun deleteRecipe(recipe: Recipe) {

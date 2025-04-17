@@ -46,7 +46,12 @@
         android:id="@+id/nav_profile"
         android:name="sanchez.carlos.gourmetco.ui.profile.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+
+        <action
+                android:id="@+id/action_profileFragment_to_createFragment"
+                app:destination="@id/nav_create"/>
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_detalles_receta"

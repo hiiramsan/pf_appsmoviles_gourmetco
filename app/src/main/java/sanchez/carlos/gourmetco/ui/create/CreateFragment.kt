@@ -24,6 +24,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
@@ -34,6 +35,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import sanchez.carlos.gourmetco.MainActivity
 import sanchez.carlos.gourmetco.R
+import sanchez.carlos.gourmetco.Recipe
 import kotlin.random.Random
 
 class CreateFragment : Fragment() {
@@ -64,6 +66,11 @@ class CreateFragment : Fragment() {
     val UPLOAD_PRESET = "recipes-preset"
     var imageUri: Uri? = null
 
+    // for editing...
+    private var isEditing = false
+    private var currentRecipeId: String? = null
+    private lateinit var ingredientAdapter: IngredientAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ingredientes = ArrayList()
@@ -87,6 +94,62 @@ class CreateFragment : Fragment() {
         setupRecyclerView()
         setupButtons()
         setupCategories()
+
+        arguments?.let { bundle ->
+            isEditing = bundle.getBoolean("IS_EDIT", false)
+            currentRecipeId = bundle.getString("RECIPE_ID")
+
+            if (isEditing) loadRecipeData()
+        }
+
+        ingredientAdapter = setupRecyclerView()
+
+    }
+
+    // load recipe data on edit mode
+    private fun loadRecipeData() {
+        currentRecipeId ?: return
+
+        FirebaseFirestore.getInstance().collection("recipes")
+            .document(currentRecipeId!!)
+            .get()
+            .addOnSuccessListener { document ->
+                val recipe = document.toObject(Recipe::class.java) ?: return@addOnSuccessListener
+
+                // set title, desc and isntructrions
+                etTitle.setText(recipe.title)
+                etDescription.setText(recipe.description)
+                etInstructions.setText(recipe.instructions)
+
+                // set infredients
+                ingredientes.clear()
+                recipe.ingredients.forEach { ingredient ->
+                    ingredientes.add(Ingredient(ingredient.name, ingredient.quantity, ingredient.unit))
+                }
+                ingredientAdapter.notifyDataSetChanged()
+                requireView().findViewById<RecyclerView>(R.id.rvIngredients).scrollToPosition(0)
+
+                // set categories
+                flexboxSelectedCategories.removeAllViews()
+                recipe.categories?.let { categories ->
+                    categoriasSeleccionadas.clear()
+                    categoriasSeleccionadas.addAll(categories)
+                    updateSelectedCategories()
+                    updateAvailableCategories()
+                }
+
+                // set isshared
+                if (recipe.isShared) checkBoxShare.isChecked = true
+
+                // set phto
+                recipe.image?.let { uri ->
+                    Glide.with(requireContext()).load(uri).into(ivPreview)
+                }
+
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Error cargando recetitia del orto", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun setupViews(view: View) {
@@ -106,7 +169,7 @@ class CreateFragment : Fragment() {
         checkBoxShare = view.findViewById(R.id.checkBoxShare)
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView(): IngredientAdapter {
         val rvIngredients: RecyclerView = requireView().findViewById(R.id.rvIngredients)
         cargarIngredients()
 
@@ -123,6 +186,8 @@ class CreateFragment : Fragment() {
             adapter.notifyItemInserted(ingredientes.size - 1)
             rvIngredients.smoothScrollToPosition(ingredientes.size - 1)
         }
+
+        return adapter
     }
 
     private fun setupButtons() {
@@ -221,7 +286,7 @@ class CreateFragment : Fragment() {
     }
 
     private fun saveRecipe() {
-        if (imageUri == null) {
+        if (imageUri == null && !isEditing) {
             Toast.makeText(requireContext(), "Selecciona una imagen", Toast.LENGTH_SHORT).show()
             return
         }
