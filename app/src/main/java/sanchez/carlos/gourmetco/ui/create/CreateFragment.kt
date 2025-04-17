@@ -288,6 +288,7 @@ class CreateFragment : Fragment() {
     }
 
     private fun saveRecipe() {
+        // For new recipes, validate image. For editing, image is optional
         if (imageUri == null && !isEditing) {
             Toast.makeText(requireContext(), "Selecciona una imagen", Toast.LENGTH_SHORT).show()
             return
@@ -306,6 +307,16 @@ class CreateFragment : Fragment() {
             return
         }
 
+        // If editing and no new image was selected, save with existing image URL
+        if (isEditing && imageUri == null) {
+            // Assume originalImageUrl is stored when loading the recipe for editing
+            saveRecipeToFirestore(
+                title, description, instructions, link, currentPhoto!!, isShared
+            )
+            return
+        }
+
+        // Upload new image (for new recipes or when editing with a new image)
         com.cloudinary.android.MediaManager.get().upload(imageUri).unsigned(UPLOAD_PRESET)
             .callback(object : UploadCallback {
                 override fun onStart(requestId: String) {}
@@ -360,23 +371,38 @@ class CreateFragment : Fragment() {
                 "userId" to currentUser.uid,
                 "categories" to categoriasSeleccionadas,
                 "ingredients" to ingredientes.map { it.toMap() },
-                "createdAt" to System.currentTimeMillis(),
-                "calories" to getRandomCalories(),
-                "time" to getRandomMinutes()
+                "updatedAt" to System.currentTimeMillis()
             )
 
-            db.collection("recipes").add(recipe).addOnSuccessListener {
-                Toast.makeText(requireContext(), "Receta guardada", Toast.LENGTH_SHORT).show()
+            // If we're editing, don't overwrite creation data
+            if (!isEditing) {
+                recipe["createdAt"] = System.currentTimeMillis()
+                recipe["calories"] = getRandomCalories()
+                recipe["time"] = getRandomMinutes()
+            }
 
-                val intent = Intent(requireContext(), MainActivity::class.java).apply {
-                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-                startActivity(intent)
-            }.addOnFailureListener { e ->
-                Log.e("Firebase", "Error saving recipe", e)
-                Toast.makeText(
-                    requireContext(), "Error al guardar receta", Toast.LENGTH_SHORT
-                ).show()
+            val successMessage = if (isEditing) "Receta actualizada" else "Receta guardada"
+
+            if (isEditing) {
+                db.collection("recipes").document(currentRecipeId!!)
+                    .update(recipe as Map<String, Any>)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()
+                        navigateBackToMain()
+                    }
+                    .addOnFailureListener { e ->
+                        handleFirebaseError(e, "actualizar")
+                    }
+            } else {
+                // Create new recipe
+                db.collection("recipes").add(recipe)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()
+                        navigateBackToMain()
+                    }
+                    .addOnFailureListener { e ->
+                        handleFirebaseError(e, "guardar")
+                    }
             }
         }.addOnFailureListener { e ->
             Log.e("Firebase", "Error getting user data", e)
@@ -384,6 +410,22 @@ class CreateFragment : Fragment() {
                 requireContext(), "Error al obtener datos del usuario", Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    // Helper method to navigate back to the main activity
+    private fun navigateBackToMain() {
+        val intent = Intent(requireContext(), MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        startActivity(intent)
+    }
+
+    // Helper method to handle Firebase errors
+    private fun handleFirebaseError(e: Exception, action: String) {
+        Log.e("Firebase", "Error $action recipe", e)
+        Toast.makeText(
+            requireContext(), "Error al $action receta", Toast.LENGTH_SHORT
+        ).show()
     }
 
     fun getRandomCalories(): Long {
