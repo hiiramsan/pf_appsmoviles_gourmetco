@@ -41,15 +41,13 @@ class MyRecipesFragment : Fragment() {
     private lateinit var adapter: RecipeAdapter
     private val db: FirebaseFirestore = Firebase.firestore
     private var recipesList = mutableListOf<Recipe>()
-    private var allRecipes = mutableListOf<Recipe>() // Lista completa para filtrar
+    private var allRecipes = mutableListOf<Recipe>()
     private lateinit var auth: FirebaseAuth
     private var currentUserId: String? = null
     private var isDataLoaded = false
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_my_recipes, container, false)
     }
@@ -83,41 +81,43 @@ class MyRecipesFragment : Fragment() {
     private fun loadUserRecipes() {
         currentUserId ?: return
 
-        db.collection("recipes")
-            .whereEqualTo("userId", currentUserId)
+        // Cambiamos el get() por addSnapshotListener para actualización en tiempo real
+        db.collection("recipes").whereEqualTo("userId", currentUserId)
             .orderBy("createdAt", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener { documents ->
+            .addSnapshotListener { documents, error ->
+                if (error != null) {
+                    Log.w("MyRecipesFragment", "Error al escuchar cambios", error)
+                    Toast.makeText(
+                        context,
+                        "Error al cargar recetas: ${error.localizedMessage}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@addSnapshotListener
+                }
+
                 recipesList.clear()
-                allRecipes.clear() // Limpiar la lista completa
-                for (document in documents) {
+                allRecipes.clear()
+
+                documents?.forEach { document ->
                     try {
                         val recipe = document.toObject(Recipe::class.java).apply {
                             id = document.id
                         }
                         recipesList.add(recipe)
-                        allRecipes.add(recipe) // Guardar una copia en la lista completa
+                        allRecipes.add(recipe)
                     } catch (e: Exception) {
                         Log.e("MyRecipesFragment", "Error converting document: ${document.id}", e)
                     }
                 }
+
                 adapter.notifyDataSetChanged()
+                listView.invalidateViews() // Forzar redibujado de la vista
 
                 if (recipesList.isEmpty()) {
                     Toast.makeText(
-                        context,
-                        "No tienes recetas guardadas",
-                        Toast.LENGTH_SHORT
+                        context, "No tienes recetas guardadas", Toast.LENGTH_SHORT
                     ).show()
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.w("MyRecipesFragment", "Error loading recipes", exception)
-                Toast.makeText(
-                    context,
-                    "Error al cargar recetas: ${exception.localizedMessage}",
-                    Toast.LENGTH_LONG
-                ).show()
             }
     }
 
@@ -128,8 +128,11 @@ class MyRecipesFragment : Fragment() {
     private fun navigateToRecipeDetail(recipe: Recipe) {
         val bundle = bundleOf("recipeId" to recipe.id)
         findNavController().navigate(
-            R.id.action_navigation_home_to_detallesRecetaFragment,
-            bundle
+            R.id.action_navigation_home_to_detallesRecetaFragment, bundle
         )
+    }
+
+    companion object {
+        fun newInstance() = MyRecipesFragment()
     }
 }

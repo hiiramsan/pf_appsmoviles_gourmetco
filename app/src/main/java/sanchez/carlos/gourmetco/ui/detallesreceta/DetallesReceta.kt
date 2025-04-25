@@ -12,11 +12,13 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayout
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import sanchez.carlos.gourmetco.R
@@ -33,6 +35,8 @@ class DetallesReceta : Fragment() {
     private lateinit var recipeId: String
     private val db: FirebaseFirestore = Firebase.firestore
     private var ingredientsList = ArrayList<Ingredient>()
+    private var isSaved = false
+    private lateinit var bookmarkView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +53,14 @@ class DetallesReceta : Fragment() {
         val ivBack = view.findViewById<ImageView>(R.id.ivBack)
         ivBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
+        // Inicializar la vista del bookmark
+        bookmarkView = view.findViewById(R.id.tvLikes)
+
+        // Configurar el clic en el bookmark para guardar/quitar la receta
+        bookmarkView.setOnClickListener {
+            toggleSaveRecipe()
         }
 
         // Cargar los datos de la receta desde Firestore
@@ -125,14 +137,78 @@ class DetallesReceta : Fragment() {
             flexTags.addView(textView)
         }
 
-        // Configurar bookmark (si está guardado por el usuario actual)
-        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-        val isSaved = currentUserId?.let { recipe.savedBy.contains(it) } ?: false
-
+        // Verificar si la receta está guardada por el usuario actual
+        checkIfRecipeIsSaved()
     }
 
+    private fun checkIfRecipeIsSaved() {
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
+        db.collection("recipes").document(recipeId).get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val recipe = document.toObject(Recipe::class.java)
+                recipe?.let {
+                    // Comprobar si el usuario actual ha guardado esta receta
+                    isSaved = it.savedBy.contains(currentUserId)
 
+                    // Actualizar la apariencia del bookmark según el estado
+                    updateBookmarkAppearance()
+                }
+            }
+        }
+    }
+
+    private fun updateBookmarkAppearance() {
+        val drawableRes = if (isSaved) R.drawable.bookmarkcheck else R.drawable.bookmark
+        bookmarkView.setCompoundDrawablesWithIntrinsicBounds(drawableRes, 0, 0, 0)
+    }
+
+    private fun toggleSaveRecipe() {
+        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
+        if (currentUserId == null) {
+            Toast.makeText(context, "Debes iniciar sesión para guardar recetas", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+
+        val recipeRef = db.collection("recipes").document(recipeId)
+
+        db.runTransaction { transaction ->
+            val snapshot = transaction.get(recipeRef)
+            val currentSavedBy = snapshot.get("savedBy") as? List<String> ?: emptyList()
+
+            val newSavedBy = if (currentUserId in currentSavedBy) {
+                currentSavedBy - currentUserId
+            } else {
+                currentSavedBy + currentUserId
+            }
+
+            transaction.update(
+                recipeRef, "savedBy", newSavedBy, "timesSaved", newSavedBy.size.toLong()
+            )
+
+            currentUserId in newSavedBy
+        }.addOnSuccessListener { newSavedState ->
+            isSaved = newSavedState
+
+            // Update the UI
+            bookmarkView.text = if (isSaved) {
+                (bookmarkView.text.toString().toInt() + 1).toString()
+            } else {
+                (bookmarkView.text.toString().toInt() - 1).toString()
+            }
+
+            updateBookmarkAppearance()
+
+            val message = if (isSaved) "Receta guardada correctamente"
+            else "Receta eliminada de tus guardados"
+
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener { e ->
+            Log.e("DetallesReceta", "Error al actualizar guardado", e)
+            Toast.makeText(context, "Error al guardar receta", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     private fun formatSteps(steps: List<String>): String {
         return steps.mapIndexed { index, step ->
@@ -173,10 +249,8 @@ class DetallesReceta : Fragment() {
             view.findViewById<TextView>(R.id.ing_cantidad).text = ingredient.quantity
             view.findViewById<TextView>(R.id.ing_medida).text = ingredient.unit
 
-            // ✅ Aplica margen inferior dinámicamente (solo si no es el último item)
             val layoutParams = ViewGroup.MarginLayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )
             val marginBottom = if (position < count - 1) 10.dpToPx(context) else 0
             layoutParams.setMargins(0, 0, 0, marginBottom)
@@ -184,7 +258,6 @@ class DetallesReceta : Fragment() {
 
             return view
         }
-
 
         override fun getCount(): Int = ingredients.size
         override fun getItem(position: Int): Ingredient = ingredients[position]

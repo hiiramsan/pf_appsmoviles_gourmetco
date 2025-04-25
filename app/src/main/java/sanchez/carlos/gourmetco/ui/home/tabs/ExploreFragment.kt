@@ -66,22 +66,29 @@ class ExploreFragment : Fragment() {
     private fun loadPublicRecipes() {
         db.collection("recipes")
             .whereEqualTo("isShared", true)
-            .get()
-            .addOnSuccessListener { documents ->
+            .addSnapshotListener { documents, error ->
+                if (error != null) {
+                    Log.w("ExploreFragment", "Error al escuchar cambios", error)
+                    return@addSnapshotListener
+                }
+
                 recipesList.clear()
-                allRecipes.clear() // Limpiar la lista completa
-                for (document in documents) {
+                allRecipes.clear()
+
+                documents?.forEach { document ->
                     try {
                         val recipe = document.toObject(Recipe::class.java).apply {
                             id = document.id
                         }
                         recipesList.add(recipe)
-                        allRecipes.add(recipe) // Guardar una copia en la lista completa
+                        allRecipes.add(recipe)
                     } catch (e: Exception) {
-                        Log.e("ExploreFragment", "Error al convertir documento: ${document.id}", e)
+                        Log.e("ExploreFragment", "Error al convertir documento", e)
                     }
                 }
+
                 adapter.notifyDataSetChanged()
+                listView.invalidateViews()
 
                 if (recipesList.isEmpty()) {
                     Toast.makeText(
@@ -90,14 +97,6 @@ class ExploreFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.w("ExploreFragment", "Error al cargar recetas", exception)
-                Toast.makeText(
-                    context,
-                    "Error al cargar recetas: ${exception.localizedMessage}",
-                    Toast.LENGTH_LONG
-                ).show()
             }
     }
 
