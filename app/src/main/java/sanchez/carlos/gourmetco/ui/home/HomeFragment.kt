@@ -79,19 +79,24 @@ class HomeFragment : Fragment() {
         setupSearch()
     }
 
+    private fun searchInExploreFragment(fragment: ExploreFragment, query: String) {
+        fragment.applySearchFilter(query)
+    }
+
+    private fun searchInMyRecipesFragment(fragment: MyRecipesFragment, query: String) {
+        fragment.applySearchFilter(query)
+    }
 
     private fun setupSearch() {
         binding.ivSearch.setOnClickListener {
             performSearch(binding.etSearch.text.toString().trim())
         }
-
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 performSearch(binding.etSearch.text.toString().trim())
                 true
             } else false
         }
-
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) { performSearch(s.toString().trim()) }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -100,23 +105,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupSearchButton() {
-        // Configurar el botón de búsqueda (ivSearch)
         binding.ivSearch.setOnClickListener {
             val query = binding.etSearch.text.toString().trim()
             performSearch(query)
 
-            // Ocultar el teclado después de buscar
             val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
         }
 
-        // También permitir búsqueda con la tecla "Enter" del teclado
         binding.etSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
                 val query = binding.etSearch.text.toString().trim()
                 performSearch(query)
 
-                // Ocultar el teclado
                 val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
                 return@setOnEditorActionListener true
@@ -126,32 +127,26 @@ class HomeFragment : Fragment() {
     }
 
     private fun performSearch(query: String) {
-        // Obtener el fragmento actual basado en la posición del ViewPager
         val currentPosition = binding.viewPager.currentItem
         val currentFragment = viewPagerAdapter.getFragment(currentPosition)
 
-        // Aplicar la búsqueda al fragmento actual
         when (currentFragment) {
             is ExploreFragment -> searchInExploreFragment(currentFragment, query)
             is MyRecipesFragment -> searchInMyRecipesFragment(currentFragment, query)
         }
     }
 
-    private fun searchInExploreFragment(fragment: ExploreFragment, query: String) {
-        // Obtener la referencia a la ListView y al adaptador del ExploreFragment
+    private fun searchInExploreFragmentOLD(fragment: ExploreFragment, query: String) {
         val listView = fragment.view?.findViewById<ListView>(R.id.lvRecipes)
         val adapter = listView?.adapter as? RecipeAdapter
 
         if (adapter != null) {
-            // Filtrar las recetas por nombre
             val allRecipes = fragment.getAllRecipes() ?: return
 
             if (query.isEmpty()) {
-                // Si no hay consulta, mostrar todas las recetas
                 adapter.clear()
                 adapter.addAll(allRecipes)
             } else {
-                // Filtrar por nombre
                 val filteredRecipes = allRecipes.filter { recipe ->
                     recipe.title.contains(query, ignoreCase = true)
                 }
@@ -162,21 +157,17 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun searchInMyRecipesFragment(fragment: MyRecipesFragment, query: String) {
-        // Obtener la referencia a la ListView y al adaptador del MyRecipesFragment
+    private fun searchInMyRecipesFragmentOLD(fragment: MyRecipesFragment, query: String) {
         val listView = fragment.view?.findViewById<ListView>(R.id.lvRecipes)
         val adapter = listView?.adapter as? RecipeAdapter
 
         if (adapter != null) {
-            // Filtrar las recetas por nombre
             val allRecipes = fragment.getAllRecipes() ?: return
 
             if (query.isEmpty()) {
-                // Si no hay consulta, mostrar todas las recetas
                 adapter.clear()
                 adapter.addAll(allRecipes)
             } else {
-                // Filtrar por nombre
                 val filteredRecipes = allRecipes.filter { recipe ->
                     recipe.title.contains(query, ignoreCase = true)
                 }

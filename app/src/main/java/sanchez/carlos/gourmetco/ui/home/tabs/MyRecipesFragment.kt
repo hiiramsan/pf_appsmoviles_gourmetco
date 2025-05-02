@@ -40,21 +40,16 @@ class MyRecipesFragment : Fragment() {
     private lateinit var listView: ListView
     private lateinit var adapter: RecipeAdapter
     private val db: FirebaseFirestore = Firebase.firestore
-    private var recipesList = mutableListOf<Recipe>()
-    private var allRecipes = mutableListOf<Recipe>()
+    private val allRecipes = mutableListOf<Recipe>() // Complete list from database
+    private val displayedRecipes = mutableListOf<Recipe>() // Filtered list for display
+    private var currentSearchQuery = ""
     private lateinit var auth: FirebaseAuth
     private var currentUserId: String? = null
-    private var isDataLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_my_recipes, container, false)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadUserRecipes()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,38 +59,34 @@ class MyRecipesFragment : Fragment() {
         currentUserId = auth.currentUser?.uid
 
         listView = view.findViewById(R.id.lvRecipes)
-        adapter = RecipeAdapter(requireContext(), recipesList, currentUserId)
+        adapter = RecipeAdapter(requireContext(), displayedRecipes, currentUserId)
         listView.adapter = adapter
 
-        if (!isDataLoaded) {
-            loadUserRecipes()
-            isDataLoaded = true
-        }
-
         listView.setOnItemClickListener { _, _, position, _ ->
-            val selectedRecipe = recipesList[position]
+            val selectedRecipe = displayedRecipes[position]
             navigateToRecipeDetail(selectedRecipe)
         }
+
+        loadUserRecipes()
     }
 
     private fun loadUserRecipes() {
         currentUserId ?: return
 
-        // Cambiamos el get() por addSnapshotListener para actualización en tiempo real
-        db.collection("recipes").whereEqualTo("userId", currentUserId)
+        db.collection("recipes")
+            .whereEqualTo("userId", currentUserId)
             .orderBy("createdAt", Query.Direction.DESCENDING)
             .addSnapshotListener { documents, error ->
                 if (error != null) {
-                    Log.w("MyRecipesFragment", "Error al escuchar cambios", error)
+                    Log.w("MyRecipesFragment", "Listen failed.", error)
                     Toast.makeText(
                         context,
-                        "Error al cargar recetas: ${error.localizedMessage}",
+                        "Error loading recipes: ${error.localizedMessage}",
                         Toast.LENGTH_LONG
                     ).show()
                     return@addSnapshotListener
                 }
 
-                recipesList.clear()
                 allRecipes.clear()
 
                 documents?.forEach { document ->
@@ -103,22 +94,48 @@ class MyRecipesFragment : Fragment() {
                         val recipe = document.toObject(Recipe::class.java).apply {
                             id = document.id
                         }
-                        recipesList.add(recipe)
                         allRecipes.add(recipe)
                     } catch (e: Exception) {
                         Log.e("MyRecipesFragment", "Error converting document: ${document.id}", e)
                     }
                 }
 
-                adapter.notifyDataSetChanged()
-                listView.invalidateViews() // Forzar redibujado de la vista
-
-                if (recipesList.isEmpty()) {
-                    Toast.makeText(
-                        context, "No tienes recetas guardadas", Toast.LENGTH_SHORT
-                    ).show()
-                }
+                // Apply current search filter to the new data
+                applySearchFilter(currentSearchQuery)
             }
+    }
+
+    fun applySearchFilter(query: String) {
+        currentSearchQuery = query
+
+        displayedRecipes.clear()
+
+        if (query.isEmpty()) {
+            displayedRecipes.addAll(allRecipes)
+        } else {
+            displayedRecipes.addAll(allRecipes.filter { recipe ->
+                recipe.title.contains(query, ignoreCase = true)
+            })
+        }
+
+        adapter.notifyDataSetChanged()
+        listView.invalidateViews()
+
+        if (displayedRecipes.isEmpty()) {
+            if (allRecipes.isEmpty()) {
+                Toast.makeText(
+                    context,
+                    "You don't have any saved recipes",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    context,
+                    "No recipes match your search",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     fun getAllRecipes(): List<Recipe> {

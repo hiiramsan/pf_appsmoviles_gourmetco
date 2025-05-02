@@ -23,11 +23,11 @@ class ExploreFragment : Fragment() {
     private lateinit var listView: ListView
     private lateinit var adapter: RecipeAdapter
     private val db: FirebaseFirestore = Firebase.firestore
-    private var recipesList = mutableListOf<Recipe>()
-    private var allRecipes = mutableListOf<Recipe>() // Lista completa para filtrar
+    private val allRecipes = mutableListOf<Recipe>()
+    private val displayedRecipes = mutableListOf<Recipe>()
+    private var currentSearchQuery = ""
     private lateinit var auth: FirebaseAuth
     private var currentUserId: String? = null
-    private var isDataLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,11 +37,6 @@ class ExploreFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_explore, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadPublicRecipes()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -49,18 +44,15 @@ class ExploreFragment : Fragment() {
         currentUserId = auth.currentUser?.uid
 
         listView = view.findViewById(R.id.lvRecipes)
-        adapter = RecipeAdapter(requireContext(), recipesList, currentUserId)
+        adapter = RecipeAdapter(requireContext(), displayedRecipes, currentUserId)
         listView.adapter = adapter
 
-        if (!isDataLoaded) {
-            loadPublicRecipes()
-            isDataLoaded = true
-        }
-
         listView.setOnItemClickListener { _, _, position, _ ->
-            val selectedRecipe = recipesList[position]
+            val selectedRecipe = displayedRecipes[position]
             navigateToRecipeDetail(selectedRecipe)
         }
+
+        loadPublicRecipes()
     }
 
     private fun loadPublicRecipes() {
@@ -68,11 +60,10 @@ class ExploreFragment : Fragment() {
             .whereEqualTo("isShared", true)
             .addSnapshotListener { documents, error ->
                 if (error != null) {
-                    Log.w("ExploreFragment", "Error al escuchar cambios", error)
+                    Log.w("ExploreFragment", "Listen failed.", error)
                     return@addSnapshotListener
                 }
 
-                recipesList.clear()
                 allRecipes.clear()
 
                 documents?.forEach { document ->
@@ -80,24 +71,48 @@ class ExploreFragment : Fragment() {
                         val recipe = document.toObject(Recipe::class.java).apply {
                             id = document.id
                         }
-                        recipesList.add(recipe)
                         allRecipes.add(recipe)
                     } catch (e: Exception) {
-                        Log.e("ExploreFragment", "Error al convertir documento", e)
+                        Log.e("ExploreFragment", "Error converting document", e)
                     }
                 }
 
-                adapter.notifyDataSetChanged()
-                listView.invalidateViews()
-
-                if (recipesList.isEmpty()) {
-                    Toast.makeText(
-                        context,
-                        "No hay recetas públicas disponibles",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                // After loading all recipes, apply current search filter
+                applySearchFilter(currentSearchQuery)
             }
+    }
+
+    fun applySearchFilter(query: String) {
+        currentSearchQuery = query
+
+        displayedRecipes.clear()
+
+        if (query.isEmpty()) {
+            displayedRecipes.addAll(allRecipes)
+        } else {
+            displayedRecipes.addAll(allRecipes.filter { recipe ->
+                recipe.title.contains(query, ignoreCase = true)
+            })
+        }
+
+        adapter.notifyDataSetChanged()
+        listView.invalidateViews()
+
+        if (displayedRecipes.isEmpty()) {
+            if (allRecipes.isEmpty()) {
+                Toast.makeText(
+                    context,
+                    "No public recipes available",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    context,
+                    "No recipes match your search",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     // Método para acceder a todas las recetas (usado para búsqueda)
