@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -110,8 +111,27 @@ class DetallesReceta : Fragment() {
         // Configurar ingredientes
         ingredientsList.clear()
         ingredientsList.addAll(recipe.ingredients)
-        val listView = view.findViewById<ListView>(R.id.listView_ingredientes)
-        listView.adapter = AdaptadorProductos(requireContext(), ingredientsList)
+        val containerIngredientes = view.findViewById<LinearLayout>(R.id.layout_ingredientes)
+        containerIngredientes.removeAllViews() // Limpiar si ya hay vistas anteriores
+
+        for ((index, ingredient) in ingredientsList.withIndex()) {
+            val itemView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.ingredientes_view, containerIngredientes, false)
+
+            itemView.findViewById<TextView>(R.id.ing_nombre).text = ingredient.name
+            itemView.findViewById<TextView>(R.id.ing_cantidad).text = ingredient.quantity
+            itemView.findViewById<TextView>(R.id.ing_medida).text = ingredient.unit
+
+            val layoutParams = ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            val marginBottom = if (index < ingredientsList.size - 1) 10.dpToPx(requireContext()) else 0
+            layoutParams.setMargins(0, 0, 0, marginBottom)
+            itemView.layoutParams = layoutParams
+
+            containerIngredientes.addView(itemView)
+        }
 
         // Configurar pasos de preparación (si necesitas separar las instrucciones en pasos)
         val steps = recipe.instructions.split("\n").filter { it.isNotBlank() }
