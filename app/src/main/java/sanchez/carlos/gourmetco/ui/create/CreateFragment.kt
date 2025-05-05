@@ -121,6 +121,7 @@ class CreateFragment : Fragment() {
                 etTitle.setText(recipe.title)
                 etDescription.setText(recipe.description)
                 etInstructions.setText(recipe.instructions)
+                etLink.setText(recipe.link)
 
                 // set infredients
                 ingredientes.clear()

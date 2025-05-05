@@ -104,6 +104,9 @@ class DetallesReceta : Fragment() {
         // Configurar descripción (usando instructions)
         view.findViewById<TextView>(R.id.tvDescription).text = recipe.description.toString()
 
+        // Configurar link
+        view.findViewById<TextView>(R.id.tvSourceLink).text = recipe.link.toString()
+
         // Configurar ingredientes
         ingredientsList.clear()
         ingredientsList.addAll(recipe.ingredients)

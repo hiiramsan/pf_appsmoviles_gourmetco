@@ -26,15 +26,16 @@
 
             <ImageView
                     android:id="@+id/ivBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="38dp"
+                    android:layout_height="39dp"
                     android:layout_margin="12dp"
                     android:src="@drawable/arrow_back"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="12dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0" />
+                    app:layout_constraintHorizontal_bias="0.042"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.037" />
 
             <View
                     android:id="@+id/divider"
